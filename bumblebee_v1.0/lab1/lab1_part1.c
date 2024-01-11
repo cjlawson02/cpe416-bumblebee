@@ -1,5 +1,5 @@
 /*
-Name: Ahren Dosanjh and Lorenzo Pedrosa
+Name: Chirs Lawson and Lorenzo Pedroza
 Assignment: Lab 1 Part 1
 Description: This program blinks an LED on and off using the functions
              provided in globals.h
