@@ -8,6 +8,11 @@ lab1_1: lab1/lab1_part1.c $(wildcard $(BOARD_LIB)/*.c)
 	avr-objcopy -O ihex main.elf main.hex
 	avr-size main.elf
 
+lab1_2: lab1/lab1_part2.c $(wildcard $(BOARD_LIB)/*.c)
+	avr-gcc -I$(BOARD_LIB) -DF_CPU=$(CLOCK_RATE) -Wall -mmcu=atmega645a -O2 -o main.elf lab1/lab1_part2.c $(wildcard $(BOARD_LIB)/*.c)
+	avr-objcopy -O ihex main.elf main.hex
+	avr-size main.elf
+
 sample: sample.c $(wildcard $(BOARD_LIB)/*.c)
 	avr-gcc -I$(BOARD_LIB) -DF_CPU=$(CLOCK_RATE) -Wall -mmcu=atmega645a -O2 -o main.elf sample.c $(wildcard $(BOARD_LIB)/*.c)
 	avr-objcopy -O ihex main.elf main.hex
@@ -22,13 +27,11 @@ lib: $(wildcard $(BOARD_LIB)/*.c)
 	$(foreach var,$(SOURCE_LIB), \
         avr-gcc -I$(BOARD_LIB) -DF_CPU=$(CLOCK_RATE) -Wall -mmcu=atmega645a -O2 -c -o $(var:.c=.o) $(var); )
 
-program_windows: 
+program_windows:
 	avrdude -F -pm645 -Pcom4 -carduino -u -U flash:w:main.hex
 
-#edit the device to match the device on your computer
-MAC_DEVICE = `ls /dev/cu*modem*`
 program_mac: main.elf
-	avrdude -pm645 -P $(MAC_DEVICE) -c arduino -F -u -U flash:w:main.hex
+	avrdude -pm645 -P /dev/cu.usbmodem21301 -c arduino -F -u -U flash:w:main.hex
 
 program_linux: main.elf
 	avrdude -pm645 -P /dev/ttyACM0 -c arduino -F -u -U flash:w:main.hex
