@@ -9,11 +9,9 @@ Description: This program repeatedly scrolls our full names across the LCD displ
 #include <util/delay.h>
 #include <string.h>
 
-// Function by Chris Lawson
-
 // Initialize global constants for names
-const char *name1 = "Chris Lawson";
-const char *name2 = "Lorenzo Pedroza";
+const char name1[] = "Chris Lawson";
+const char name2[] = "Lorenzo Pedroza";
 const uint8_t MAX_SCREEN_LEN = 8;
 uint8_t btn_pressed = 0;
 
@@ -22,7 +20,7 @@ int main(void)
     init(); // initialize the board hardware
     clear_screen();
 
-    const char *name_to_display = name1;
+    char *name_to_display = name1;
 
     // Initialize variables
     while (1)

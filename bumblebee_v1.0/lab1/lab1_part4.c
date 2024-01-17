@@ -1,8 +1,9 @@
 /*
 Name: Chris Lawson and Lorenzo Pedroza
 Assignment: Lab 1 Part 2
-Description: This program repeatedly scrolls our full names across the LCD display.
-             Pressing the user button should switches between lab partners.
+Description: This program scrolls "416" across the LCD display.
+             Tilting the board left/right scrolls the text left/right.
+             Tilting the board up/down scrolls the text up/down.
 */
 
 #include "globals.h"
@@ -11,17 +12,8 @@ Description: This program repeatedly scrolls our full names across the LCD displ
 #include <stdlib.h>
 #include <string.h>
 
-// Function by Chris Lawson
-
 // Initialize global constants for names
 const uint8_t MAX_SCREEN_LEN = 8;
-
-void floatToString(char *str, const float value, const int precision)
-{
-    int intPart = (int)value;
-    int fracPart = (int)((value - (float)intPart) * pow(10, precision));
-    sprintf(str, "%d.%d", intPart, abs(fracPart));
-}
 
 int main(void)
 {
