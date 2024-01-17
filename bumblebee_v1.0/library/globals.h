@@ -68,6 +68,9 @@ typedef unsigned int u16;
 #define I2C_DELAY 1
 #define MMA8453_ADDR 0x1C
 #define COMPASS_ADDR 0x1E
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 
 u08 digital(u08 num);
@@ -108,7 +111,15 @@ void set_servo(u08 servo_num, u08 position);
 
 void i2c_regwrite(u08 dev_addr, u08 address, u08 data);
 u08 i2c_regread(u08 dev_addr, u08 address);
-u08 get_accel_x();
-u08 get_accel_y();
-u08 get_accel_z();
+u08 get_accel_x_msb();
+u08 get_accel_y_msb();
+u08 get_accel_z_msb();
+u08 get_accel_x_lsb();
+u08 get_accel_y_lsb();
+u08 get_accel_z_lsb();
+u16 get_accel_x();
+u16 get_accel_y();
+u16 get_accel_z();
+float get_pitch_deg();
+float get_roll_deg();
 #endif

@@ -7,61 +7,19 @@ Description: This program repeatedly scrolls our full names across the LCD displ
 
 #include "globals.h"
 #include <util/delay.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Function by Chris Lawson
 
 // Initialize global constants for names
 const uint8_t MAX_SCREEN_LEN = 8;
 
-double convert_acceleration(uint8_t acceleration)
-{
-    if (acceleration > 127)
-    {
-        return -((255.0 - acceleration) / 127.0);
-    }
-    else
-    {
-        return (acceleration / 128.0);
-    }
-}
-
-double get_normalized_accel_x()
-{
-    return convert_acceleration(get_accel_x());
-}
-
-double get_normalized_accel_y()
-{
-    return convert_acceleration(get_accel_y());
-}
-
-double get_normalized_accel_z()
-{
-    return convert_acceleration(get_accel_z());
-}
-
-double get_pitch()
-{
-    double x = get_normalized_accel_x();
-    double y = get_normalized_accel_y();
-    double z = get_normalized_accel_z();
-    return atan2(x, sqrt(y * y + z * z));
-}
-double get_roll()
-{
-    double x = get_normalized_accel_x();
-    double y = get_normalized_accel_y();
-    double z = get_normalized_accel_z();
-    return atan2(y, sqrt(x * x + z * z));
-}
-
-void doubleToString(char *str, const double value, const int precision)
+void floatToString(char *str, const float value, const int precision)
 {
     int intPart = (int)value;
-    int fracPart = (int)((value - (double)intPart) * pow(10, precision));
+    int fracPart = (int)((value - (float)intPart) * pow(10, precision));
     sprintf(str, "%d.%d", intPart, abs(fracPart));
 }
 
@@ -70,7 +28,9 @@ int main(void)
     init(); // initialize the board hardware
     clear_screen();
 
-    const char *text = "416"; // Text to display
+    const char text[] = "416";
+    const char ext[] = "16";
+    const char xt[] = "6";
     int textLen = strlen(text);
 
     // Cursor positions for scrolling
@@ -79,8 +39,8 @@ int main(void)
 
     while (1)
     {
-        double pitch = get_pitch(); // Get current pitch value
-        double roll = get_roll();   // Get current roll value
+        float pitch = get_pitch_deg(); // Get current pitch value
+        float roll = get_roll_deg();   // Get current roll value
 
         // Adjust cursor position based on roll
         if (roll > 0 && cursorPos < MAX_SCREEN_LEN - 1)
@@ -95,10 +55,10 @@ int main(void)
         // Adjust line based on pitch
         line = (pitch > 0) ? 1 : 0;
 
-        clear_screen();           // Clear the screen
-        lcd_cursor(0, cursorPos); // Set the cursor position
-        print_string(text);       // Print the text at the new cursor position
+        clear_screen();              // Clear the screen
+        lcd_cursor(line, cursorPos); // Set the cursor position
+        print_string(text);          // Print the text at the new cursor position
 
-        _delay_ms(100); // Delay for 100ms
+        _delay_ms(500); // Delay for 500ms
     }
 }
