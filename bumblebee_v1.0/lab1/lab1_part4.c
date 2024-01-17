@@ -28,37 +28,67 @@ int main(void)
     init(); // initialize the board hardware
     clear_screen();
 
-    const char text[] = "416";
-    const char ext[] = "16";
-    const char xt[] = "6";
-    int textLen = strlen(text);
+    char text[] = "416";
 
-    // Cursor positions for scrolling
-    int cursorPos = MAX_SCREEN_LEN - textLen; // Start from the rightmost position
-    int line = 0;                             // Start line (top)
+    int i = 0;
+    int row = 0;
+    int col = 0;
+    char displayString[MAX_SCREEN_LEN + 1];
+    strncpy(displayString, text, MAX_SCREEN_LEN);
 
     while (1)
     {
-        float pitch = get_pitch_deg(); // Get current pitch value
         float roll = get_roll_deg();   // Get current roll value
+        float pitch = get_pitch_deg(); // Get current pitch value
 
-        // Adjust cursor position based on roll
-        if (roll > 0 && cursorPos < MAX_SCREEN_LEN - 1)
+        clear_screen();
+
+        // If rolling, scroll to the right/left
+        if (abs(roll) > 5)
         {
-            cursorPos++;
+            if (roll > 0)
+            {
+                // Tilting to the left
+                if (col > 1)
+                {
+                    strncpy(displayString, text, MAX_SCREEN_LEN);
+                    col--;
+                    i = 0;
+                }
+                else if (i < strlen(text))
+                {
+                    strncpy(displayString, text + i, MAX_SCREEN_LEN);
+                    i++;
+                    col = 0;
+                }
+            }
+            else
+            {
+                // Tilting to the right
+
+                if (i > 0)
+                {
+                    i--;
+                    strncpy(displayString, text + i, MAX_SCREEN_LEN);
+                    col = 0;
+                }
+                else if (col < MAX_SCREEN_LEN - 1)
+                {
+                    strncpy(displayString, text, MAX_SCREEN_LEN);
+                    col++;
+                    i = 0;
+                }
+            }
         }
-        else if (roll < 0 && cursorPos > 0)
+
+        if (abs(pitch) > 5)
         {
-            cursorPos--;
+            row = (pitch > 0) ? 0 : 1;
         }
 
-        // Adjust line based on pitch
-        line = (pitch > 0) ? 1 : 0;
+        lcd_cursor(col, row);
+        print_string(displayString);
 
-        clear_screen();              // Clear the screen
-        lcd_cursor(line, cursorPos); // Set the cursor position
-        print_string(text);          // Print the text at the new cursor position
-
-        _delay_ms(500); // Delay for 500ms
+        _delay_ms(200); // Delay for 500ms
     }
 }
