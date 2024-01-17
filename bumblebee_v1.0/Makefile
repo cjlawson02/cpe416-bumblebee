@@ -41,7 +41,7 @@ program_windows:
 	avrdude -F -pm645 -Pcom4 -carduino -u -U flash:w:main.hex
 
 program_mac: main.elf
-	avrdude -pm645 -P /dev/cu.usbmodem21301 -c arduino -F -u -U flash:w:main.hex
+	avrdude -pm645 -P /dev/cu.usbmodem211401 -c arduino -F -u -U flash:w:main.hex
 
 program_linux: main.elf
 	avrdude -pm645 -P /dev/ttyACM0 -c arduino -F -u -U flash:w:main.hex
