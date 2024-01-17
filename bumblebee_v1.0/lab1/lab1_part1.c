@@ -1,8 +1,7 @@
 /*
-Name: Chirs Lawson and Lorenzo Pedroza
+Name: Chris Lawson and Lorenzo Pedroza
 Assignment: Lab 1 Part 1
-Description: This program blinks an LED on and off using the functions
-             provided in globals.h
+Description: This program fades an LED on and off continuously
 */
 
 #include "globals.h"

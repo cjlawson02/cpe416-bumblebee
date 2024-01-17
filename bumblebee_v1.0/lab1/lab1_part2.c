@@ -2,7 +2,7 @@
 Name: Chris Lawson and Lorenzo Pedroza
 Assignment: Lab 1 Part 2
 Description: This program repeatedly scrolls our full names across the LCD display.
-             Pressing the user button should switches between lab partners.
+             Pressing the user button switches the lab partner name shown.
 */
 
 #include "globals.h"
