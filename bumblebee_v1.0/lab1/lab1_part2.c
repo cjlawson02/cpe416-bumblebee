@@ -15,7 +15,7 @@ Description: This program repeatedly scrolls our full names across the LCD displ
 const char *name1 = "Chris Lawson";
 const char *name2 = "Lorenzo Pedroza";
 const uint8_t MAX_SCREEN_LEN = 8;
-volatile uint8_t btn_pressed = 0;
+uint8_t btn_pressed = 0;
 
 int main(void)
 {
