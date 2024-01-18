@@ -252,3 +252,15 @@ u08 i2c_regread(u08 dev_addr, u08 address) {
    read_register(dev_addr, &temp,1);
    return temp;
 }
+
+u08 get_accel_x() {
+   return i2c_regread(MMA8453_ADDR,0x1);
+}
+
+u08 get_accel_y() {
+   return i2c_regread(MMA8453_ADDR,0x3);
+}
+
+u08 get_accel_z() {
+   return i2c_regread(MMA8453_ADDR,0x5);
+}

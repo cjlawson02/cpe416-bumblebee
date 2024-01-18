@@ -1,21 +1,4 @@
-#include "globals.h"
-#include <stdint.h>
-#include <math.h>
-
-u08 get_accel_x_msb()
-{
-    return i2c_regread(MMA8453_ADDR, 0x1);
-}
-
-u08 get_accel_y_msb()
-{
-    return i2c_regread(MMA8453_ADDR, 0x3);
-}
-
-u08 get_accel_z_msb()
-{
-    return i2c_regread(MMA8453_ADDR, 0x5);
-}
+#include "accel.h"
 
 u08 get_accel_x_lsb()
 {
@@ -32,23 +15,23 @@ u08 get_accel_z_lsb()
     return i2c_regread(MMA8453_ADDR, 0x6);
 }
 
-u16 get_accel_x()
+u16 get_full_accel_x()
 {
-    u08 msb = get_accel_x_msb();
+    u08 msb = get_accel_x();
     u08 lsb = get_accel_x_lsb();
     return (msb << 2) | (lsb & 0x03);
 }
 
-u16 get_accel_y()
+u16 get_full_accel_y()
 {
-    u08 msb = get_accel_y_msb();
+    u08 msb = get_accel_y();
     u08 lsb = get_accel_y_lsb();
     return (msb << 2) | (lsb & 0x03);
 }
 
-u16 get_accel_z()
+u16 get_full_accel_z()
 {
-    u08 msb = get_accel_z_msb();
+    u08 msb = get_accel_z();
     u08 lsb = get_accel_z_lsb();
     return (msb << 2) | (lsb & 0x03);
 }

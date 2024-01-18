@@ -7,6 +7,7 @@ Description: This program scrolls "416" across the LCD display.
 */
 
 #include "globals.h"
+#include "accel.h"
 #include <util/delay.h>
 #include <stdio.h>
 #include <stdlib.h>

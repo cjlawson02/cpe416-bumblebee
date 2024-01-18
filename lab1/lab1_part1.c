@@ -7,7 +7,6 @@ Description: This program fades an LED on and off continuously
 #include "globals.h"
 #include <util/delay.h>
 
-// Function by Lorenzo Pedroza
 void var_delay_ms(double del_time)
 {
    double j = 0;
