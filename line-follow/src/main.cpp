@@ -5,9 +5,9 @@ int main()
   setup();
 
   // lab2_part1();
-  lab2_part2();
+  // lab2_part2();
   // lab2_part3();
-  // lab2_part4();
+  lab2_part4();
   return 0;
 }
 
@@ -192,18 +192,24 @@ void lab2_part3()
 void lab2_part4()
 {
   // Line follower with PID
-  PID pid = PID(0.5, 0, 0);
+  PID pid = PID(1.0, 0, 0);
+  pid.setTarget(0);
 
   while (1)
   {
+    // clear_screen();
+    // print_num(get_left_IR_amount() * 100);
+    // _delay_ms(20);
     // Calculate the error
     double error = get_left_IR_amount() - get_right_IR_amount();
 
-    // Calculate the output
-    double output = pid.calcOutputWithError(error);
+    clear_screen();
+    print_speed(error);
+    // print_num(output * 100);
+    _delay_ms(20);
 
     // Set the motors
-    motor(SERVO0_PIN, output * 100);
-    motor(SERVO1_PIN, -output * 100);
+    motor(SERVO0_PIN, 100 - (error * 100));
+    motor(SERVO1_PIN, -(100 + (error * 100)));
   }
 }
