@@ -8,35 +8,35 @@
 class PID
 {
 public:
-    PID(double Kp = 0.0, double Ki = 0.0, double Kd = 0.0);
+    PID(float Kp = 0.0, float Ki = 0.0, float Kd = 0.0);
 
-    void setGains(double Kp = 0.0, double Ki = 0.0, double Kd = 0.0);
-    void setTarget(double target);
-    double getTarget();
-    void reset(double currPosition = NAN);
-    void setBounds(double min, double max);
+    void setGains(float Kp = 0.0, float Ki = 0.0, float Kd = 0.0);
+    void setTarget(float target);
+    float getTarget();
+    void reset(float currPosition = NAN);
+    void setBounds(float min, float max);
 
     // These calculate output based on the target and actual
-    double calcOutput(double actual);
-    double calcOutput(double actual, u16 timeMs);
+    float calcOutput(float actual);
+    float calcOutput(float actual, u16 timeMs);
 
     // These calculate output based on error
-    double calcOutputWithError(double error);
-    double calcOutputWithError(double error, u16 timeMs);
+    float calcOutputWithError(float error);
+    float calcOutputWithError(float error, u16 timeMs);
 
 private:
-    double m_Kp;
-    double m_Ki;
-    double m_Kd;
+    float m_Kp;
+    float m_Ki;
+    float m_Kd;
 
-    double m_target;
-    double m_min;
-    double m_max;
+    float m_target;
+    float m_min;
+    float m_max;
 
-    double m_timeLastUpdateSec;
-    double m_prevPos;
-    double m_prevErr;
-    double m_integral;
+    float m_timeLastUpdateSec;
+    float m_prevPos;
+    float m_prevErr;
+    float m_integral;
 
-    double m_lastOutput;
+    float m_lastOutput;
 };

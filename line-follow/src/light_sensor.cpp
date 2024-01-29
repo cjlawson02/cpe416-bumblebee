@@ -20,10 +20,25 @@ float get_right_light_amount()
 
 float get_left_IR_amount()
 {
-    return Util::bound((float)(analog(ANALOG3_PIN) - WHITE_VAL) / DIFF, 0, 1);
+    return analog(ANALOG3_PIN);
 }
 
 float get_right_IR_amount()
 {
+    return analog(ANALOG2_PIN);
+}
+
+float get_left_IR_percent()
+{
+    return Util::bound((float)(analog(ANALOG3_PIN) - WHITE_VAL) / DIFF, 0, 1);
+}
+
+float get_right_IR_percent()
+{
     return Util::bound((float)(analog(ANALOG2_PIN) - WHITE_VAL) / DIFF, 0, 1);
+}
+
+float get_IR_diff()
+{
+    return get_left_IR_percent() - get_right_IR_percent();
 }

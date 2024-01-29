@@ -13,6 +13,7 @@ int main()
 
 void setup()
 {
+  drivetrain = Drivetrain(SERVO0_PIN, SERVO1_PIN);
   init_millis(16000000UL);
   init();
   motor(SERVO0_PIN, 0);
@@ -37,8 +38,7 @@ void lab2_part1()
     for (int i = 0; i <= 100; i++)
     {
       print_speed(i);
-      motor(SERVO0_PIN, i);
-      motor(SERVO1_PIN, -i);
+      drivetrain.set_speed(i);
       _delay_ms(50);
     }
 
@@ -46,8 +46,7 @@ void lab2_part1()
     for (int i = 100; i >= 0; i--)
     {
       print_speed(i);
-      motor(SERVO0_PIN, i);
-      motor(SERVO1_PIN, -i);
+      drivetrain.set_speed(i);
       _delay_ms(50);
     }
 
@@ -55,8 +54,7 @@ void lab2_part1()
     for (int i = 0; i >= -100; i--)
     {
       print_speed(i);
-      motor(SERVO0_PIN, i);
-      motor(SERVO1_PIN, -i);
+      drivetrain.set_speed(i);
       _delay_ms(50);
     }
 
@@ -64,8 +62,7 @@ void lab2_part1()
     for (int i = -100; i <= 0; i++)
     {
       print_speed(i);
-      motor(SERVO0_PIN, i);
-      motor(SERVO1_PIN, -i);
+      drivetrain.set_speed(i);
       _delay_ms(50);
     }
   }
@@ -105,14 +102,12 @@ void lab2_part2()
       // Fear
       if (get_right_light_amount() > 0.8 || get_left_light_amount() > 0.8)
       {
-        motor(SERVO0_PIN, -pow(get_left_light_amount(), 3) * 1000);
-        motor(SERVO1_PIN, pow(get_right_light_amount(), 3) * 1000);
+        drivetrain.set_speed(-pow(get_left_light_amount(), 3) * 1000, -pow(get_right_light_amount(), 3) * 1000);
         _delay_ms(20);
       }
       else
       {
-        motor(SERVO0_PIN, 100);
-        motor(SERVO1_PIN, -100);
+        drivetrain.set_speed(100);
       }
     }
     else
@@ -120,13 +115,11 @@ void lab2_part2()
       print_string("2b");
       if (get_right_light_amount() > 0.5 || get_left_light_amount() > 0.5)
       {
-        motor(SERVO0_PIN, -pow(get_right_light_amount(), 3) * 100);
-        motor(SERVO1_PIN, pow(get_left_light_amount(), 3) * 100);
+        drivetrain.set_speed(-pow(get_right_light_amount(), 3) * 100, -pow(get_left_light_amount(), 3) * 100);
       }
       else
       {
-        motor(SERVO0_PIN, 100);
-        motor(SERVO1_PIN, -100);
+        drivetrain.set_speed(100);
       }
     }
   }
@@ -168,8 +161,7 @@ void lab2_part3()
       }
       else
       {
-        motor(SERVO0_PIN, 100);
-        motor(SERVO1_PIN, -100);
+        drivetrain.set_speed(100);
       }
     }
     else
@@ -177,13 +169,11 @@ void lab2_part3()
       print_string("Vehicle 3b");
       if (get_right_light_amount() > 0.5 || get_left_light_amount() > 0.5)
       {
-        motor(SERVO0_PIN, pow(1 - get_right_light_amount(), 3) * 100);
-        motor(SERVO1_PIN, -pow(1 - get_left_light_amount(), 3) * 100);
+        drivetrain.set_speed(pow(1 - get_right_light_amount(), 3) * 100, pow(1 - get_left_light_amount(), 3) * 100);
       }
       else
       {
-        motor(SERVO0_PIN, 100);
-        motor(SERVO1_PIN, -100);
+        drivetrain.set_speed(100);
       }
     }
   }
@@ -193,23 +183,13 @@ void lab2_part4()
 {
   // Line follower with PID
   PID pid = PID(1.0, 0, 0);
-  pid.setTarget(0);
 
   while (1)
   {
-    // clear_screen();
-    // print_num(get_left_IR_amount() * 100);
-    // _delay_ms(20);
     // Calculate the error
-    double error = get_left_IR_amount() - get_right_IR_amount();
-
-    clear_screen();
-    print_speed(error);
-    // print_num(output * 100);
-    _delay_ms(20);
+    float output = pid.calcOutputWithError(get_IR_diff());
 
     // Set the motors
-    motor(SERVO0_PIN, 100 - (error * 100));
-    motor(SERVO1_PIN, -(100 + (error * 100)));
+    drivetrain.set_speed_turn(1.0, output);
   }
 }

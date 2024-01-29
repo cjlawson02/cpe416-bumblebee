@@ -1,6 +1,6 @@
 #include "pid_controller.h"
 
-PID::PID(double Kp, double Ki, double Kd)
+PID::PID(float Kp, float Ki, float Kd)
 {
     m_Kp = Kp;
     m_Ki = Ki;
@@ -16,46 +16,46 @@ PID::PID(double Kp, double Ki, double Kd)
     m_integral = 0;
 }
 
-void PID::setGains(double Kp, double Ki, double Kd)
+void PID::setGains(float Kp, float Ki, float Kd)
 {
     m_Kp = Kp;
     m_Ki = Ki;
     m_Kd = Kd;
 }
 
-void PID::setTarget(double target)
+void PID::setTarget(float target)
 {
     m_target = target;
 }
 
-double PID::getTarget()
+float PID::getTarget()
 {
     return m_target;
 }
 
-void PID::reset(double currPosition)
+void PID::reset(float currPosition)
 {
     m_integral = 0.0;
     m_prevPos = currPosition;
     m_timeLastUpdateSec = 0.0;
 }
 
-void PID::setBounds(double min, double max)
+void PID::setBounds(float min, float max)
 {
     m_min = min;
     m_max = max;
 }
 
-double PID::calcOutput(double actual)
+float PID::calcOutput(float actual)
 {
     return calcOutput(actual, millis());
 }
 
-double PID::calcOutput(double actual, u16 time)
+float PID::calcOutput(float actual, u16 time)
 {
-    double error = m_target - actual;
-    double derivative = 0;
-    double output;
+    float error = m_target - actual;
+    float derivative = 0;
+    float output;
 
     /**
      * m_timeLastUpdate will be zero if this is the first call ever or first
@@ -64,7 +64,7 @@ double PID::calcOutput(double actual, u16 time)
      */
     if (m_timeLastUpdateSec != 0.0)
     {
-        double deltaTimeSec = secs() - m_timeLastUpdateSec;
+        float deltaTimeSec = secs() - m_timeLastUpdateSec;
 
         m_integral += error * deltaTimeSec;
 
@@ -84,15 +84,15 @@ double PID::calcOutput(double actual, u16 time)
     return output;
 }
 
-double PID::calcOutputWithError(double error)
+float PID::calcOutputWithError(float error)
 {
     return calcOutputWithError(error, millis());
 }
 
-double PID::calcOutputWithError(double error, u16 time)
+float PID::calcOutputWithError(float error, u16 time)
 {
-    double derivative = 0;
-    double output;
+    float derivative = 0;
+    float output;
 
     /**
      * m_timeLastUpdate will be zero if this is the first call ever or first
@@ -101,7 +101,7 @@ double PID::calcOutputWithError(double error, u16 time)
      */
     if (m_timeLastUpdateSec != 0.0)
     {
-        double deltaTimeSec = secs() - m_timeLastUpdateSec;
+        float deltaTimeSec = secs() - m_timeLastUpdateSec;
 
         m_integral += error * deltaTimeSec;
 

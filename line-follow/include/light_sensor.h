@@ -7,3 +7,6 @@ float get_left_light_amount();
 float get_right_light_amount();
 float get_left_IR_amount();
 float get_right_IR_amount();
+float get_left_IR_percent();
+float get_right_IR_percent();
+float get_IR_diff();

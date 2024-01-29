@@ -1,11 +1,13 @@
 #include <Bumblebee.h>
 #include "timer.h"
-#include "motor.h"
 #include "light_sensor.h"
 #include "pid_controller.h"
 #include <util/delay.h>
+#include "drivetrain.h"
 
 #pragma once
+
+Drivetrain drivetrain;
 
 int main();
 void setup();
