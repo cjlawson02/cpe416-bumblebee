@@ -8,8 +8,8 @@ int main()
 
   // lab2_part1();
   // lab2_part2();
-  // lab2_part3();
-  lab2_part4();
+  lab2_part3();
+  // lab2_part4();
   return 0;
 }
 
@@ -18,8 +18,6 @@ void setup()
   drivetrain.setup();
   init_millis(16000000UL);
   init();
-  motor(SERVO0_PIN, 0);
-  motor(SERVO1_PIN, 0);
 }
 
 void print_speed(int speed)
@@ -76,6 +74,7 @@ void lab2_part2()
 
   // true = vehicle 2a, false = vehicle 2b
   bool vehicle_mode = true;
+  print_string("2a");
 
   while (1)
   {
@@ -87,16 +86,21 @@ void lab2_part2()
         clear_screen();
         button_pressed = true;
         vehicle_mode = !vehicle_mode;
+
+        if (vehicle_mode)
+        {
+          print_string("2a");
+        }
+        else
+        {
+          print_string("2b");
+        }
       }
     }
     else
     {
       button_pressed = false;
     }
-
-    // clear_screen();
-    // print_num(get_right_light_amount() * 100);
-    // _delay_ms(1000);
 
     // Handle mode logic
     if (vehicle_mode)
@@ -114,7 +118,6 @@ void lab2_part2()
     }
     else
     {
-      print_string("2b");
       if (get_right_light_amount() > 0.5 || get_left_light_amount() > 0.5)
       {
         drivetrain.set_speed(-pow(get_right_light_amount(), 3) * 100, -pow(get_left_light_amount(), 3) * 100);
@@ -133,6 +136,7 @@ void lab2_part3()
 
   // true = vehicle 3a, false = vehicle 3b
   bool vehicle_mode = true;
+  print_string("3a");
 
   while (1)
   {
@@ -141,8 +145,18 @@ void lab2_part3()
     {
       if (!button_pressed)
       {
+        clear_screen();
         button_pressed = true;
         vehicle_mode = !vehicle_mode;
+
+        if (vehicle_mode)
+        {
+          print_string("3a");
+        }
+        else
+        {
+          print_string("3b");
+        }
       }
     }
     else
@@ -151,15 +165,12 @@ void lab2_part3()
     }
 
     // Handle mode logic
-    clear_screen();
     if (vehicle_mode)
     {
-      print_string("Vehicle 3a");
       // Fear
       if (get_right_light_amount() > 0.5 || get_left_light_amount() > 0.5)
       {
-        motor(SERVO0_PIN, pow(1 - get_left_light_amount(), 3) * 100);
-        motor(SERVO1_PIN, -pow(1 - get_right_light_amount(), 3) * 100);
+        drivetrain.set_speed(pow(1 - get_left_light_amount(), 3) * 100, pow(1 - get_right_light_amount(), 3) * 100);
       }
       else
       {
@@ -168,7 +179,6 @@ void lab2_part3()
     }
     else
     {
-      print_string("Vehicle 3b");
       if (get_right_light_amount() > 0.5 || get_left_light_amount() > 0.5)
       {
         drivetrain.set_speed(pow(1 - get_right_light_amount(), 3) * 100, pow(1 - get_left_light_amount(), 3) * 100);
