@@ -7,8 +7,6 @@
 
 #pragma once
 
-Drivetrain drivetrain;
-
 int main();
 void setup();
 

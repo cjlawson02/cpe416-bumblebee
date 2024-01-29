@@ -6,6 +6,11 @@ Drivetrain::Drivetrain(const int left_motor, const int right_motor)
     this->right_motor = right_motor;
 }
 
+void Drivetrain::setup()
+{
+    set_speed(0);
+}
+
 void Drivetrain::set_speed(const float left_speed, const float right_speed)
 {
     motor(this->left_motor, left_speed);

@@ -1,5 +1,7 @@
 #include "main.h"
 
+Drivetrain drivetrain = Drivetrain(SERVO0_PIN, SERVO1_PIN);
+
 int main()
 {
   setup();
@@ -13,7 +15,7 @@ int main()
 
 void setup()
 {
-  drivetrain = Drivetrain(SERVO0_PIN, SERVO1_PIN);
+  drivetrain.setup();
   init_millis(16000000UL);
   init();
   motor(SERVO0_PIN, 0);
@@ -182,14 +184,16 @@ void lab2_part3()
 void lab2_part4()
 {
   // Line follower with PID
-  PID pid = PID(1.0, 0, 0);
+  PID pid = PID(17.0, 2.0, 5.0);
+  pid.setBounds(-100, 100);
 
   while (1)
   {
-    // Calculate the error
-    float output = pid.calcOutputWithError(get_IR_diff());
+    print_num(get_left_IR_amount());
+    _delay_ms(20);
+    clear_screen();
 
     // Set the motors
-    drivetrain.set_speed_turn(1.0, output);
+    drivetrain.set_speed_turn(15, -pid.calcOutputWithError(get_IR_diff()));
   }
 }

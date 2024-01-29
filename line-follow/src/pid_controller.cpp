@@ -105,7 +105,7 @@ float PID::calcOutputWithError(float error, u16 time)
 
         m_integral += error * deltaTimeSec;
 
-        if (m_prevPos != NAN)
+        if (m_prevPos != NAN && m_prevErr != NAN && deltaTimeSec != 0.0)
         {
             derivative = (error - m_prevErr) / deltaTimeSec;
         }

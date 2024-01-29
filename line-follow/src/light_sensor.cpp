@@ -1,7 +1,7 @@
 #include "light_sensor.h"
 
-const int WHITE_VAL = 50;
-const int DIFF = 30;
+const int WHITE_VAL = 150;
+const int DIFF = 70;
 
 float analog_to_percent(u08 analog_value)
 {
@@ -30,12 +30,12 @@ float get_right_IR_amount()
 
 float get_left_IR_percent()
 {
-    return Util::bound((float)(analog(ANALOG3_PIN) - WHITE_VAL) / DIFF, 0, 1);
+    return Util::bound((get_left_IR_amount() - WHITE_VAL) / DIFF, 0, 1);
 }
 
 float get_right_IR_percent()
 {
-    return Util::bound((float)(analog(ANALOG2_PIN) - WHITE_VAL) / DIFF, 0, 1);
+    return Util::bound((get_right_IR_amount() - WHITE_VAL) / DIFF, 0, 1);
 }
 
 float get_IR_diff()
