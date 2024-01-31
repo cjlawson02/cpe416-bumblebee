@@ -194,7 +194,7 @@ void lab2_part3()
 void lab2_part4()
 {
   // Line follower with PID
-  PID pid = PID(17.0, 0.0, 5.0);
+  PID pid = PID(30.0, 0.0, 1.0);
   pid.setBounds(-100, 100);
   int last_working_dir = 1;
 
