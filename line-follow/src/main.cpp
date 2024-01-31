@@ -194,8 +194,9 @@ void lab2_part3()
 void lab2_part4()
 {
   // Line follower with PID
-  PID pid = PID(17.0, 2.0, 5.0);
+  PID pid = PID(17.0, 0.0, 5.0);
   pid.setBounds(-100, 100);
+  int last_working_dir = 1;
 
   while (1)
   {
@@ -208,8 +209,8 @@ void lab2_part4()
     {
       // turn right for 500 ms, if not found still, turn left for 1000 ms, then repeat
       int init_time = millis();
-      drivetrain.set_speed_turn(0, 100);
-      int dir = 1;
+      int dir = last_working_dir;
+      drivetrain.set_speed_turn(0, dir * 50);
       int init_wait_time = 100;
       int wait_time = init_wait_time;
       while (off_track())
@@ -222,6 +223,7 @@ void lab2_part4()
           wait_time = init_wait_time * 2;
         }
       }
+      last_working_dir = dir;
     }
     // normal operation PID  Set the motors
     drivetrain.set_speed_turn(15, -pid.calcOutputWithError(get_IR_diff()));
