@@ -8,8 +8,8 @@ int main()
 
   // lab2_part1();
   // lab2_part2();
-  lab2_part3();
-  // lab2_part4();
+  // lab2_part3();
+  lab2_part4();
   return 0;
 }
 
@@ -203,7 +203,15 @@ void lab2_part4()
     _delay_ms(20);
     clear_screen();
 
-    // Set the motors
+    //corrective maneuver for the square corners (on-off controller operation)
+    if(off_track())
+    {
+      drivetrain.set_speed_turn(5, 0.5); //set drive train speeed
+      while(off_track()); //wait until we return to the track
+    }
+    
+    //normal operation PID  Set the motors
     drivetrain.set_speed_turn(15, -pid.calcOutputWithError(get_IR_diff()));
   }
+  
 }

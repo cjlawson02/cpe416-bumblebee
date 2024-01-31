@@ -2,6 +2,7 @@
 
 const int WHITE_VAL = 150;
 const int DIFF = 70;
+const float LINE_THRESHOLD = 20.0;
 
 float analog_to_percent(u08 analog_value)
 {
@@ -41,4 +42,9 @@ float get_right_IR_percent()
 float get_IR_diff()
 {
     return get_left_IR_percent() - get_right_IR_percent();
+}
+
+bool off_track()
+{
+    return (get_left_IR_amount() < LINE_THRESHOLD) && (get_right_IR_amount() < LINE_THRESHOLD);
 }
