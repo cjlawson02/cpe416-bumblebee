@@ -15,9 +15,9 @@ int main()
 
 void setup()
 {
-  drivetrain.setup();
   init_millis(16000000UL);
   init();
+  drivetrain.setup();
 }
 
 void print_speed(int speed)
@@ -199,19 +199,31 @@ void lab2_part4()
 
   while (1)
   {
-    print_num(get_left_IR_amount());
+    print_num(get_right_IR_amount());
     _delay_ms(20);
     clear_screen();
 
-    //corrective maneuver for the square corners (on-off controller operation)
-    if(off_track())
+    // corrective maneuver for the square corners (on-off controller operation)
+    if (off_track())
     {
-      drivetrain.set_speed_turn(5, 0.5); //set drive train speeed
-      while(off_track()); //wait until we return to the track
+      // turn right for 500 ms, if not found still, turn left for 1000 ms, then repeat
+      int init_time = millis();
+      drivetrain.set_speed_turn(0, 100);
+      int dir = 1;
+      int init_wait_time = 100;
+      int wait_time = init_wait_time;
+      while (off_track())
+      {
+        if ((int)millis() - init_time > wait_time)
+        {
+          dir *= -1;
+          drivetrain.set_speed_turn(0, dir * 50);
+          init_time = millis();
+          wait_time = init_wait_time * 2;
+        }
+      }
     }
-    
-    //normal operation PID  Set the motors
+    // normal operation PID  Set the motors
     drivetrain.set_speed_turn(15, -pid.calcOutputWithError(get_IR_diff()));
   }
-  
 }
