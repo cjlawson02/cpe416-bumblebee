@@ -1,3 +1,6 @@
+//Name:  Lorenzo Pedroza and Chris Lawson
+//Lab 2 Part 2 and 3
+//Description: Light sensor helper library for Lab 2 parts 2 and 3
 #include "light_sensor.h"
 
 const int LEFT_WHITE_VAL = 110;

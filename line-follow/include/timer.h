@@ -1,3 +1,6 @@
+//Name:  Lorenzo Pedroza and Chris Lawson
+//Lab  2
+//Description: A timing library.
 #include <Bumblebee.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>

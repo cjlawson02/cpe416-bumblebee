@@ -1,3 +1,6 @@
+//Name:  Lorenzo Pedroza and Chris Lawson
+//Lab 2
+//Description: Drivetrain library to help run the differential drive.
 #include "motor.h"
 
 class Drivetrain
