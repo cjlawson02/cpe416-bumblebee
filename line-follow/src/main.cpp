@@ -6,10 +6,10 @@ int main()
 {
   setup();
 
-  // lab2_part1();
-  // lab2_part2();
-  // lab2_part3();
-  lab2_part4();
+  lab2_part1();
+  //lab2_part2();
+  //lab2_part3();
+  //lab2_part4();
   return 0;
 }
 
@@ -103,28 +103,29 @@ void lab2_part2()
     }
 
     // Handle mode logic
-    if (vehicle_mode)
+    if (vehicle_mode) //fear
     {
       // Fear
-      if (get_right_light_amount() > 0.8 || get_left_light_amount() > 0.8)
+      if (get_right_light_amount() > 0.6 || get_left_light_amount() > 0.6)
       {
-        drivetrain.set_speed(-pow(get_left_light_amount(), 3) * 1000, -pow(get_right_light_amount(), 3) * 1000);
-        _delay_ms(20);
+        drivetrain.set_speed(pow(get_left_light_amount(), 3) * 70, pow(get_right_light_amount(), 3) * 70);
+        _delay_ms(100);
       }
       else
       {
-        drivetrain.set_speed(100);
+        drivetrain.set_speed(5);
       }
     }
-    else
+    else    //aggression
     {
-      if (get_right_light_amount() > 0.5 || get_left_light_amount() > 0.5)
+      if (get_right_light_amount() > 0.6 || get_left_light_amount() > 0.6)
       {
-        drivetrain.set_speed(-pow(get_right_light_amount(), 3) * 100, -pow(get_left_light_amount(), 3) * 100);
+        drivetrain.set_speed(pow(get_right_light_amount(), 3) * 70, pow(get_left_light_amount(), 3) * 70);
+        _delay_ms(100);
       }
       else
       {
-        drivetrain.set_speed(100);
+        drivetrain.set_speed(5);
       }
     }
   }
@@ -167,25 +168,29 @@ void lab2_part3()
     // Handle mode logic
     if (vehicle_mode)
     {
-      // Fear
-      if (get_right_light_amount() > 0.5 || get_left_light_amount() > 0.5)
+      // Attraction
+      if (get_right_light_amount() > 0.6 || get_left_light_amount() > 0.6)
       {
-        drivetrain.set_speed(pow(1 - get_left_light_amount(), 3) * 100, pow(1 - get_right_light_amount(), 3) * 100);
+        drivetrain.set_speed(-pow(get_left_light_amount(), 3) * 70, -pow(get_right_light_amount(), 3) * 70);
+        _delay_ms(100);
+        //drivetrain.set_speed(pow(1 - get_left_light_amount(), 3) * 100, pow(1 - get_right_light_amount(), 3) * 100);
       }
       else
       {
-        drivetrain.set_speed(100);
+        drivetrain.set_speed(5);
       }
     }
     else
     {
       if (get_right_light_amount() > 0.5 || get_left_light_amount() > 0.5)
       {
-        drivetrain.set_speed(pow(1 - get_right_light_amount(), 3) * 100, pow(1 - get_left_light_amount(), 3) * 100);
+        //drivetrain.set_speed(pow(1 - get_right_light_amount(), 3) * 100, pow(1 - get_left_light_amount(), 3) * 100);
+        drivetrain.set_speed(-pow(get_right_light_amount(), 3) * 70, -pow(get_left_light_amount(), 3) * 70);
+        _delay_ms(5);
       }
       else
       {
-        drivetrain.set_speed(100);
+        drivetrain.set_speed(5);
       }
     }
   }
