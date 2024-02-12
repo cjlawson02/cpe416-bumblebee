@@ -1,6 +1,8 @@
-//Name:  Lorenzo Pedroza and Chris Lawson
-//Lab 2 Part 4
-//Description: A PID controller.
+// Name:  Lorenzo Pedroza and Chris Lawson
+// Lab 2 Part 4
+// Description: A PID controller.
+#pragma once
+
 #include <Bumblebee.h>
 #include <math.h>
 #include "util.h"

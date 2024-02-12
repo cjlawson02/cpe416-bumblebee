@@ -1,12 +1,10 @@
-//Name:  Lorenzo Pedroza and Chris Lawson
-//Lab 2
-//Description: Drivetrain library to help run the differential drive.
+// Name:  Lorenzo Pedroza and Chris Lawson
+// Lab 2
+// Description: Drivetrain library to help run the differential drive.
 #include "drivetrain.h"
 
-Drivetrain::Drivetrain(const int left_motor, const int right_motor)
+Drivetrain::Drivetrain(const int left_motor, const int right_motor) : m_leftMotor(left_motor), m_rightMotor(right_motor)
 {
-    this->left_motor = left_motor;
-    this->right_motor = right_motor;
 }
 
 void Drivetrain::setup()
@@ -16,8 +14,8 @@ void Drivetrain::setup()
 
 void Drivetrain::set_speed(const float left_speed, const float right_speed)
 {
-    motor(this->left_motor, left_speed);
-    motor(this->right_motor, -right_speed);
+    motor(this->m_leftMotor, left_speed);
+    motor(this->m_rightMotor, -right_speed);
 }
 
 void Drivetrain::set_speed(const float speed)

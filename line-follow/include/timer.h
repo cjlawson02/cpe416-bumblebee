@@ -1,12 +1,12 @@
-//Name:  Lorenzo Pedroza and Chris Lawson
-//Lab  2
-//Description: A timing library.
+// Name:  Lorenzo Pedroza and Chris Lawson
+// Lab  2
+// Description: A timing library.
+#pragma once
+
 #include <Bumblebee.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/atomic.h>
-
-#pragma once
 
 extern volatile unsigned long timer1_millis;
 

@@ -1,6 +1,8 @@
-//Name:  Lorenzo Pedroza and Chris Lawson
-//Lab 2
-//Description: Motor library to map the servo ranges to -100 (full reverse) to 100 (full forward).
+// Name:  Lorenzo Pedroza and Chris Lawson
+// Lab 2
+// Description: Motor library to map the servo ranges to -100 (full reverse) to 100 (full forward).
+#pragma once
+
 #include <Bumblebee.h>
 #include <stdlib.h>
 #include "util.h"

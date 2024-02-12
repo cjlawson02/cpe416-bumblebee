@@ -1,6 +1,8 @@
-//Name:  Lorenzo Pedroza and Chris Lawson
-//Lab 2
-//Description: Drivetrain library to help run the differential drive.
+// Name:  Lorenzo Pedroza and Chris Lawson
+// Lab 2
+// Description: Drivetrain library to help run the differential drive.
+#pragma once
+
 #include "motor.h"
 
 class Drivetrain
@@ -14,8 +16,6 @@ public:
     void set_speed_turn(const float speed, const float turn);
 
 private:
-    float left_speed;
-    float right_speed;
-    int left_motor;
-    int right_motor;
+    int m_leftMotor;
+    int m_rightMotor;
 };
