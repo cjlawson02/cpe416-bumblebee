@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <math.h>
 #include <vector>
+#include <numeric>
 
 /**
  * @brief Neuron class represents a single neuron in a neural network.

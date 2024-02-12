@@ -16,7 +16,7 @@ float Neuron::calculate(std::vector<float> inputs)
 
 float Neuron::calculateNet(std::vector<float> inputs)
 {
-    return 0.0f;
+    return inner_product(inputs.begin(), inputs.end(), m_weights.begin(), 0) - m_bias;
 }
 
 float Neuron::activation(float net)
