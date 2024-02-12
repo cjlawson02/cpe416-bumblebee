@@ -1,15 +1,14 @@
 #include "neural_network.h"
 
-NeuralNetwork::NeuralNetwork(std::vector<size_t> topology)
+NeuralNetwork::NeuralNetwork(const std::vector<size_t> topology)
     : m_topology(topology)
 {
-
     for (size_t i = 0; i < m_topology.size(); i++)
     {
         size_t numNeurons = m_topology[i];
         for (size_t j = 0; j < numNeurons; j++)
         {
-            Neuron *neuron = new Neuron(getRandWeights(3), 0.0);
+            Neuron neuron = Neuron(getRandWeights(3), 0.0);
             neuronLayers[j].push_back(neuron);
         }
     }
@@ -19,12 +18,24 @@ NeuralNetwork::~NeuralNetwork()
 {
 }
 
-float NeuralNetwork::calculate(std::vector<float> inputs)
+std::vector<float> NeuralNetwork::calculate(const std::vector<float> inputs)
 {
-    return 0.0f;
+    // Calculate on the first layer, then pass those results to the next layer, and so on
+    std::vector<float> in = inputs;
+    for (size_t i = 0; i < m_topology.size(); i++)
+    {
+        std::vector<float> results;
+        for (size_t j = 0; j < neuronLayers[i].size(); j++)
+        {
+            results.push_back(neuronLayers[i][j].calculate(in));
+        }
+        in = results;
+    }
+
+    return in;
 }
 
-std::vector<float> NeuralNetwork::getRandWeights(size_t numWeights)
+std::vector<float> NeuralNetwork::getRandWeights(const size_t numWeights)
 {
     std::vector<float> weights;
     for (size_t i = 0; i < numWeights; i++)
