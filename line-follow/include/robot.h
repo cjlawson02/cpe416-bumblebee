@@ -39,10 +39,21 @@ private:
     unsigned long m_offTrackInitTime;
     unsigned long m_offTrackWaitTime;
 
+    struct TrainingData
+    { // Structure declaration
+        u08 left_ir_reading;
+        u08 right_ir_reading;
+        float left_speed; // Member (int variable)
+        float right_speed;
+    };
+
     void periodic();
 
     void print_controller_string();
     void when_btn_pressed();
+    void data_state_periodic();
+    void data_state_init();
+    void pid_state_periodic();
 
     bool m_buttonPressed;
 };
