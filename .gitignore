@@ -54,3 +54,4 @@ dkms.conf
 *:Zone.Identifier
 
 .vscode
+line-follow/platformio.ini
