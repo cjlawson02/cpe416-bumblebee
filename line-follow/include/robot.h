@@ -8,6 +8,8 @@
 #include "timer.h"
 #include "drivetrain.h"
 #include "debouncer.h"
+#include "pid_controller.h"
+#include "light_sensor.h"
 
 class Robot
 {
@@ -17,10 +19,10 @@ public:
 
     enum ControllerType
     {
-        PID,
-        DATA,
-        TRAINING,
-        NEURAL_NETWORK
+        PID_MODE,
+        DATA_MODE,
+        TRAINING_MODE,
+        NEURAL_NETWORK_MODE
     };
 
     void setup();
@@ -30,6 +32,12 @@ private:
     ControllerType m_controllerType;
     Drivetrain m_drivetrain;
     ButtonDebouncer m_button;
+    PID m_pidController;
+
+    int m_lastWorkingDir;
+    bool m_offTrackMode;
+    unsigned long m_offTrackInitTime;
+    unsigned long m_offTrackWaitTime;
 
     void periodic();
 

@@ -8,8 +8,6 @@
 #include "util.h"
 #include "timer.h"
 
-#pragma once
-
 class PID
 {
 public:
