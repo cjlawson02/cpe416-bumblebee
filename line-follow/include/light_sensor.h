@@ -15,4 +15,5 @@ float get_right_IR_amount();
 float get_left_IR_percent();
 float get_right_IR_percent();
 float get_IR_diff();
+float get_IR_diff(const float left_ir_pecent, const float right_ir_percent);
 bool off_track();

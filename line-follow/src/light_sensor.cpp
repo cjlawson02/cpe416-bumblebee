@@ -51,6 +51,11 @@ float get_IR_diff()
     return get_left_IR_percent() - get_right_IR_percent();
 }
 
+float get_IR_diff(const float left_ir_pecent, const float right_ir_percent)
+{
+    return left_ir_pecent-right_ir_percent;
+}
+
 bool off_track()
 {
     return (get_left_IR_percent() < PERCENT_THRESHOLD) && (get_right_IR_percent() < PERCENT_THRESHOLD);

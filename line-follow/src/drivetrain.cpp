@@ -27,3 +27,10 @@ void Drivetrain::set_speed_turn(const float speed, const float turn)
 {
     set_speed(speed + turn, speed - turn);
 }
+
+//Method to calculated the values for set_speed
+struct MotorCommand Drivetrain::compute_proportional(PID pid, const float fwd_speed, const float left_ir_percent, const float right_ir_percent)
+{
+    float turn = pid.calcOutputWithError(get_IR_diff(left_ir_percent, right_ir_percent));
+    return (struct MotorCommand) {fwd_speed+turn, fwd_speed-turn};
+}
