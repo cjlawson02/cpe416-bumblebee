@@ -7,7 +7,7 @@
 Robot::Robot() : m_controllerType(PID_MODE),
                  m_drivetrain(Drivetrain(SERVO0_PIN, SERVO1_PIN)),
                  m_button(ButtonDebouncer(10)),
-                 m_pidController(PID(25.0, 0.0, 1.0)),
+                 m_pidController(PID(12.0, 0.0, 1.0)),
                  m_lastWorkingDir(1),
                  m_offTrackMode(false),
                  m_offTrackInitTime(0),
@@ -135,10 +135,14 @@ void Robot::pid_state_periodic()
         }
 
         // Set the speed and turn based on the PID controller
-        float error = m_pidController.calcOutputWithError(get_IR_diff());
-        m_drivetrain.set_speed_turn(15, -error);
-        lcd_cursor(0, 1);
-        print_num((u16)error);
+        //float error = m_pidController.calcOutputWithError(get_IR_diff());
+        //m_drivetrain.set_speed_turn(15, -error);
+        struct MotorCommand speeds;
+        speeds = m_drivetrain.compute_proportional(m_pidController, 15, get_left_IR_raw(), get_right_IR_raw());
+        m_drivetrain.set_speed(speeds);
+
+        //lcd_cursor(0, 1);
+        //print_num((u16)error);
     }
 }
 

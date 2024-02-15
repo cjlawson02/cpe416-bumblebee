@@ -20,6 +20,7 @@ public:
 
   void setup();
   void set_speed(const float left_speed, const float right_speed);
+  void set_speed(MotorCommand m_command);
   void set_speed(const float speed);
   void set_speed_turn(const float speed, const float turn);
   void stop();

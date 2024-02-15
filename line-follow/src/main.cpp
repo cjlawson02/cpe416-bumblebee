@@ -4,7 +4,7 @@
 #include "main.h"
 
 
-#define P 25.5
+#define P 12.0
 #define I 0.0
 #define D 1.0
 
