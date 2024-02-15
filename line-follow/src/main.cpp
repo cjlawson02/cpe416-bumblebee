@@ -6,10 +6,10 @@ int main()
 {
   setup();
 
-  lab2_part1();
+  //lab2_part1();
   //lab2_part2();
   //lab2_part3();
-  //lab2_part4();
+  lab2_part4();
   return 0;
 }
 
@@ -199,7 +199,7 @@ void lab2_part3()
 void lab2_part4()
 {
   // Line follower with PID
-  PID pid = PID(30.0, 0.0, 1.0);
+  PID pid = PID(12.0, 0.0, 1.0);
   pid.setBounds(-100, 100);
   int last_working_dir = 1;
 
