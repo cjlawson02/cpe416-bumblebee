@@ -205,7 +205,7 @@ void lab2_part4()
 
   while (1)
   {
-    print_num(get_right_IR_amount());
+    print_num(get_IR_diff());
     _delay_ms(20);
     clear_screen();
 
