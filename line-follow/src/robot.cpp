@@ -3,6 +3,7 @@
 // Description: Robot class to run the robot.
 
 #include "robot.h"
+#include <util/delay.h>
 
 Robot::Robot() : m_controllerType(PID_MODE),
                  m_drivetrain(Drivetrain(SERVO0_PIN, SERVO1_PIN)),
@@ -148,7 +149,31 @@ void Robot::pid_state_periodic()
 
 void Robot::data_state_init()
 {
+    u08 left_ir_reading;
+    u08 right_ir_reading;
     m_drivetrain.stop();
+    
+    while(!m_button.get() && m_num_data_pts < MAX_DATA_PTS)
+    {
+        /* code */
+        _delay_ms(300);
+        left_ir_reading = get_left_IR_raw();
+        right_ir_reading = get_right_IR_raw();
+        m_data_pts[m_num_data_pts].speeds 
+            = m_drivetrain.compute_proportional(m_pidController,
+                                                15, 
+                                                left_ir_reading, 
+                                                right_ir_reading);
+        m_num_data_pts++;
+        clear_screen();
+        print_string("Data");
+        lcd_cursor(5, 0);
+        print_num((u16)(m_num_data_pts));
+        lcd_cursor(0, 1);
+        print_num(left_ir_reading);
+        lcd_cursor(4, 1);
+        print_num(right_ir_reading);
+    } 
 }
 
 void Robot::data_state_periodic()

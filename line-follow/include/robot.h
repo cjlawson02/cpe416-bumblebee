@@ -11,6 +11,8 @@
 #include "pid_controller.h"
 #include "light_sensor.h"
 
+#define MAX_DATA_PTS 100
+
 class Robot
 {
 public:
@@ -23,6 +25,13 @@ public:
         DATA_MODE,
         TRAINING_MODE,
         NEURAL_NETWORK_MODE
+    };
+
+    struct TrainingData
+    { // Structure declaration
+        u08 left_ir_reading;
+        u08 right_ir_reading;
+        MotorCommand speeds;
     };
 
     void setup();
@@ -38,14 +47,8 @@ private:
     bool m_offTrackMode;
     unsigned long m_offTrackInitTime;
     unsigned long m_offTrackWaitTime;
-
-    struct TrainingData
-    { // Structure declaration
-        u08 left_ir_reading;
-        u08 right_ir_reading;
-        float left_speed; // Member (int variable)
-        float right_speed;
-    };
+    struct TrainingData m_data_pts[MAX_DATA_PTS];
+    u16 m_num_data_pts = 0;
 
     void periodic();
 
