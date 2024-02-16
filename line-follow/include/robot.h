@@ -15,6 +15,11 @@
 #include "neural_network.h"
 
 #define MAX_DATA_PTS 100
+#define NEURAL_INPUTS 2
+#define NEURAL_TOPOLOGY \
+    {                   \
+        3, 3, 2         \
+    }
 
 class Robot
 {
@@ -25,7 +30,8 @@ public:
     enum ControllerType
     {
         PID_MODE,
-        DATA_MODE,
+        DATA_COLLECT_MODE,
+        DATA_WAIT_MODE,
         TRAINING_MODE,
         NEURAL_NETWORK_MODE
     };
@@ -51,19 +57,25 @@ private:
     bool m_offTrackMode;
     unsigned long m_offTrackInitTime;
     unsigned long m_offTrackWaitTime;
+    unsigned long m_lastDataTime;
     std::vector<struct TrainingData> m_data_pts;
 
     void periodic();
 
     void print_controller_string();
     void when_btn_pressed();
-    void data_state_periodic();
+
+    void pid_state_periodic();
+
     void data_state_init();
+    void data_collect_state_periodic();
+    void data_wait_state_periodic();
+
     void training_state_init();
     void training_state_periodic();
+
     void neural_state_init();
     void neural_state_periodic();
-    void pid_state_periodic();
 
     bool m_buttonPressed;
 };

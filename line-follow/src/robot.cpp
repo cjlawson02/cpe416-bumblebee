@@ -8,11 +8,12 @@ Robot::Robot() : m_controllerType(PID_MODE),
                  m_drivetrain(new Drivetrain(SERVO0_PIN, SERVO1_PIN)),
                  m_button(new ButtonDebouncer(10)),
                  m_pidController(new PID(12.0, 0.0, 1.0)),
-                 m_neuralNetwork(new NeuralNetwork({2, 2, 1})),
+                 m_neuralNetwork(new NeuralNetwork(NEURAL_INPUTS, NEURAL_TOPOLOGY)),
                  m_lastWorkingDir(1),
                  m_offTrackMode(false),
                  m_offTrackInitTime(0),
-                 m_offTrackWaitTime(100)
+                 m_offTrackWaitTime(100),
+                 m_lastDataTime(0)
 {
     m_pidController->setBounds(-100, 100);
 }
@@ -61,8 +62,11 @@ void Robot::periodic()
     case PID_MODE:
         pid_state_periodic();
         break;
-    case DATA_MODE:
-        data_state_periodic();
+    case DATA_COLLECT_MODE:
+        data_collect_state_periodic();
+        break;
+    case DATA_WAIT_MODE:
+        data_wait_state_periodic();
         break;
     case TRAINING_MODE:
         break;
@@ -78,10 +82,13 @@ void Robot::when_btn_pressed()
     switch (m_controllerType)
     {
     case PID_MODE:
-        m_controllerType = DATA_MODE;
+        m_controllerType = DATA_COLLECT_MODE;
         data_state_init();
         break;
-    case DATA_MODE:
+    case DATA_COLLECT_MODE:
+        m_controllerType = DATA_WAIT_MODE;
+        break;
+    case DATA_WAIT_MODE:
         m_controllerType = TRAINING_MODE;
         training_state_init();
         break;
@@ -147,14 +154,17 @@ void Robot::pid_state_periodic()
 
 void Robot::data_state_init()
 {
+    m_drivetrain->stop();
+}
+
+void Robot::data_collect_state_periodic()
+{
     u08 left_ir_reading;
     u08 right_ir_reading;
-    m_drivetrain->stop();
 
-    while (!m_button->get())
+    if (millis() - m_lastDataTime > 300)
     {
-        /* code */
-        _delay_ms(300);
+        m_lastDataTime = millis();
         left_ir_reading = get_left_IR_raw();
         right_ir_reading = get_right_IR_raw();
 
@@ -173,7 +183,7 @@ void Robot::data_state_init()
     }
 }
 
-void Robot::data_state_periodic()
+void Robot::data_wait_state_periodic()
 {
     struct MotorCommand speeds;
     speeds = m_drivetrain->compute_proportional(m_pidController, 15, get_left_IR_raw(), get_right_IR_raw());
@@ -189,7 +199,8 @@ void Robot::print_controller_string()
     case PID_MODE:
         print_string("Proportional");
         break;
-    case DATA_MODE:
+    case DATA_COLLECT_MODE:
+    case DATA_WAIT_MODE:
         print_string("Data");
         break;
     case TRAINING_MODE:

@@ -15,15 +15,13 @@ public:
      * The NeuralNetwork class is responsible for storing the weights and biases of the neurons.
      * It is used in the implementation of a neural network for line following.
      */
-    NeuralNetwork(const std::vector<size_t> topology);
+    NeuralNetwork(const size_t numInputs, const std::vector<size_t> topology);
     ~NeuralNetwork();
 
     /**
      * @brief Calculates the output of the neural network given the inputs.
      *
-     * @param x1 The first input.
-     * @param x2 The second input.
-     * @param x3 The third input.
+     * @param inputs The inputs to the neural network.
      * @return The output of the neural network.
      */
     std::vector<float> calculate(const std::vector<float> inputs);
