@@ -216,5 +216,12 @@ void Robot::print_controller_string()
 
 void Robot::training_state_init() {}
 void Robot::training_state_periodic() {}
+
 void Robot::neural_state_init() {}
-void Robot::neural_state_periodic() {}
+void Robot::neural_state_periodic()
+{
+    // TODO: check percent vs raw
+    struct MotorCommand speeds;
+    speeds = m_drivetrain->compute_neural_network(m_neuralNetwork, {get_left_IR_percent(), get_right_IR_percent()});
+    m_drivetrain->set_speed(speeds);
+}
