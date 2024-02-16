@@ -41,10 +41,10 @@ public:
 
 private:
     ControllerType m_controllerType;
-    Drivetrain m_drivetrain;
-    ButtonDebouncer m_button;
-    PID m_pidController;
-    NeuralNetwork m_neuralNetwork;
+    Drivetrain *m_drivetrain;
+    ButtonDebouncer *m_button;
+    PID *m_pidController;
+    NeuralNetwork *m_neuralNetwork;
 
     int m_lastWorkingDir;
     bool m_offTrackMode;

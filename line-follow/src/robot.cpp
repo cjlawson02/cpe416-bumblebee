@@ -5,16 +5,16 @@
 #include "robot.h"
 
 Robot::Robot() : m_controllerType(PID_MODE),
-                 m_drivetrain(Drivetrain(SERVO0_PIN, SERVO1_PIN)),
-                 m_button(ButtonDebouncer(10)),
-                 m_pidController(PID(12.0, 0.0, 1.0)),
-                 m_neuralNetwork(NeuralNetwork({2, 2, 1})),
+                 m_drivetrain(new Drivetrain(SERVO0_PIN, SERVO1_PIN)),
+                 m_button(new ButtonDebouncer(10)),
+                 m_pidController(new PID(12.0, 0.0, 1.0)),
+                 m_neuralNetwork(new NeuralNetwork({2, 2, 1})),
                  m_lastWorkingDir(1),
                  m_offTrackMode(false),
                  m_offTrackInitTime(0),
                  m_offTrackWaitTime(100)
 {
-    m_pidController.setBounds(-100, 100);
+    m_pidController->setBounds(-100, 100);
 }
 
 Robot::~Robot()
@@ -25,7 +25,7 @@ void Robot::setup()
 {
     init_millis(F_CPU);
     init();
-    m_drivetrain.setup();
+    m_drivetrain->setup();
 }
 
 void Robot::run()
@@ -42,7 +42,7 @@ void Robot::run()
 void Robot::periodic()
 {
     // Handle controller change
-    if (m_button.get())
+    if (m_button->get())
     {
         if (!m_buttonPressed)
         {
@@ -114,7 +114,7 @@ void Robot::pid_state_periodic()
         }
 
         // Turn in place
-        m_drivetrain.set_speed_turn(0, dir * 50);
+        m_drivetrain->set_speed_turn(0, dir * 50);
 
         // If we've been off track for too long, reverse direction
         if (millis() - m_offTrackInitTime > m_offTrackWaitTime)
@@ -140,8 +140,8 @@ void Robot::pid_state_periodic()
 
         // Set the speed and turn based on the PID controller
         struct MotorCommand speeds;
-        speeds = m_drivetrain.compute_proportional(m_pidController, 15, get_left_IR_raw(), get_right_IR_raw());
-        m_drivetrain.set_speed(speeds);
+        speeds = m_drivetrain->compute_proportional(m_pidController, 15, get_left_IR_raw(), get_right_IR_raw());
+        m_drivetrain->set_speed(speeds);
     }
 }
 
@@ -149,9 +149,9 @@ void Robot::data_state_init()
 {
     u08 left_ir_reading;
     u08 right_ir_reading;
-    m_drivetrain.stop();
+    m_drivetrain->stop();
 
-    while (!m_button.get() && m_num_data_pts < MAX_DATA_PTS)
+    while (!m_button->get() && m_num_data_pts < MAX_DATA_PTS)
     {
         /* code */
         _delay_ms(300);
@@ -161,7 +161,7 @@ void Robot::data_state_init()
         m_data_pts[m_num_data_pts] = {
             left_ir_reading,
             right_ir_reading,
-            m_drivetrain.compute_proportional(m_pidController, 15, left_ir_reading, right_ir_reading)};
+            m_drivetrain->compute_proportional(m_pidController, 15, left_ir_reading, right_ir_reading)};
 
         m_num_data_pts++;
 
@@ -179,7 +179,7 @@ void Robot::data_state_init()
 void Robot::data_state_periodic()
 {
     struct MotorCommand speeds;
-    speeds = m_drivetrain.compute_proportional(m_pidController, 15, get_left_IR_raw(), get_right_IR_raw());
+    speeds = m_drivetrain->compute_proportional(m_pidController, 15, get_left_IR_raw(), get_right_IR_raw());
     lcd_cursor(0, 1);
     print_num((u16)speeds.left_speed);
 }
