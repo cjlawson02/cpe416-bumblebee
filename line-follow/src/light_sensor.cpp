@@ -1,6 +1,6 @@
-//Name:  Lorenzo Pedroza and Chris Lawson
-//Lab 2 Part 2 and 3
-//Description: Light sensor helper library for Lab 2 parts 2 and 3
+// Name:  Lorenzo Pedroza and Chris Lawson
+// Lab 2 Part 2 and 3
+// Description: Light sensor helper library for Lab 2 parts 2 and 3
 #include "light_sensor.h"
 
 const int LEFT_WHITE_VAL = 110;
@@ -36,7 +36,6 @@ u08 get_right_IR_raw()
     return analog(ANALOG2_PIN);
 }
 
-
 float get_IR_amount(u08 raw_reading)
 {
     return (float)raw_reading;
@@ -54,12 +53,12 @@ float get_right_IR_amount(u08 right_reading_raw)
 
 float get_left_IR_amount()
 {
-    return get_IR_amount(get_left_IR_raw());//analog(ANALOG3_PIN);
+    return get_IR_amount(get_left_IR_raw()); // analog(ANALOG3_PIN);
 }
 
 float get_right_IR_amount()
 {
-    return get_IR_amount(get_right_IR_raw());//analog(ANALOG2_PIN);
+    return get_IR_amount(get_right_IR_raw()); // analog(ANALOG2_PIN);
 }
 
 float get_left_IR_percent(float left_IR_amount)
@@ -84,7 +83,7 @@ float get_right_IR_percent()
 
 float get_IR_diff(float left_IR_percent, float right_IR_percent)
 {
-    return left_IR_percent-right_IR_percent;
+    return left_IR_percent - right_IR_percent;
 }
 
 float get_IR_diff()

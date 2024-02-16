@@ -33,15 +33,14 @@ void Drivetrain::set_speed(MotorCommand m_command)
     set_speed(m_command.left_speed, m_command.right_speed);
 }
 
-
 void Drivetrain::set_speed_turn(const float speed, const float turn)
 {
     set_speed(speed + turn, speed - turn);
 }
 
-//Method to calculated the values for set_speed
+// Method to calculated the values for set_speed
 struct MotorCommand Drivetrain::compute_proportional(PID pid, const float fwd_speed, u08 left_ir_reading, u08 right_ir_reading)
 {
     float turn = -pid.calcOutputWithError(get_IR_diff(left_ir_reading, right_ir_reading));
-    return (struct MotorCommand) {fwd_speed+turn, (fwd_speed-turn)};
+    return (struct MotorCommand){fwd_speed + turn, (fwd_speed - turn)};
 }

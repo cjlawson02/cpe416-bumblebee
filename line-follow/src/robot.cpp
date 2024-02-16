@@ -117,7 +117,7 @@ void Robot::pid_state_periodic()
         m_drivetrain.set_speed_turn(0, dir * 50);
 
         // If we've been off track for too long, reverse direction
-        if ((int)millis() - m_offTrackInitTime > m_offTrackWaitTime)
+        if (millis() - m_offTrackInitTime > m_offTrackWaitTime)
         {
             dir *= -1;
             m_offTrackInitTime = millis();
@@ -139,14 +139,9 @@ void Robot::pid_state_periodic()
         }
 
         // Set the speed and turn based on the PID controller
-        //float error = m_pidController.calcOutputWithError(get_IR_diff());
-        //m_drivetrain.set_speed_turn(15, -error);
         struct MotorCommand speeds;
         speeds = m_drivetrain.compute_proportional(m_pidController, 15, get_left_IR_raw(), get_right_IR_raw());
         m_drivetrain.set_speed(speeds);
-
-        //lcd_cursor(0, 1);
-        //print_num((u16)error);
     }
 }
 
@@ -155,18 +150,17 @@ void Robot::data_state_init()
     u08 left_ir_reading;
     u08 right_ir_reading;
     m_drivetrain.stop();
-    
-    while(!m_button.get() && m_num_data_pts < MAX_DATA_PTS)
+
+    while (!m_button.get() && m_num_data_pts < MAX_DATA_PTS)
     {
         /* code */
         _delay_ms(300);
         left_ir_reading = get_left_IR_raw();
         right_ir_reading = get_right_IR_raw();
-        m_data_pts[m_num_data_pts].speeds 
-            = m_drivetrain.compute_proportional(m_pidController,
-                                                15, 
-                                                left_ir_reading, 
-                                                right_ir_reading);
+        m_data_pts[m_num_data_pts].speeds = m_drivetrain.compute_proportional(m_pidController,
+                                                                              15,
+                                                                              left_ir_reading,
+                                                                              right_ir_reading);
         m_num_data_pts++;
         clear_screen();
         print_string("Data");
@@ -176,7 +170,7 @@ void Robot::data_state_init()
         print_num(left_ir_reading);
         lcd_cursor(4, 1);
         print_num(right_ir_reading);
-    } 
+    }
 }
 
 void Robot::data_state_periodic()
@@ -209,9 +203,7 @@ void Robot::print_controller_string()
     }
 }
 
-void Robot::training_state_init(){
-    
-}
-void Robot::training_state_periodic(){}
-void Robot::neural_state_init(){}
-void Robot::neural_state_periodic(){}
+void Robot::training_state_init() {}
+void Robot::training_state_periodic() {}
+void Robot::neural_state_init() {}
+void Robot::neural_state_periodic() {}
