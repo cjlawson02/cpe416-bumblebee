@@ -56,6 +56,10 @@ private:
     void when_btn_pressed();
     void data_state_periodic();
     void data_state_init();
+    void training_state_init();
+    void training_state_periodic();
+    void neural_state_init();
+    void neural_state_periodic();
     void pid_state_periodic();
 
     bool m_buttonPressed;

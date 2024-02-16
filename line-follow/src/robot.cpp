@@ -83,11 +83,14 @@ void Robot::when_btn_pressed()
         break;
     case DATA_MODE:
         m_controllerType = TRAINING_MODE;
+        training_state_init();
         break;
     case TRAINING_MODE:
+        neural_state_init();
         m_controllerType = NEURAL_NETWORK_MODE;
         break;
     case NEURAL_NETWORK_MODE:
+        training_state_init();
         m_controllerType = TRAINING_MODE;
         break;
     default:
@@ -205,3 +208,10 @@ void Robot::print_controller_string()
         break;
     }
 }
+
+void Robot::training_state_init(){
+    
+}
+void Robot::training_state_periodic(){}
+void Robot::neural_state_init(){}
+void Robot::neural_state_periodic(){}
