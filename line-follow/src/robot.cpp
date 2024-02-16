@@ -157,15 +157,18 @@ void Robot::data_state_init()
         _delay_ms(300);
         left_ir_reading = get_left_IR_raw();
         right_ir_reading = get_right_IR_raw();
-        m_data_pts[m_num_data_pts].speeds = m_drivetrain.compute_proportional(m_pidController,
-                                                                              15,
-                                                                              left_ir_reading,
-                                                                              right_ir_reading);
+
+        m_data_pts[m_num_data_pts] = {
+            left_ir_reading,
+            right_ir_reading,
+            m_drivetrain.compute_proportional(m_pidController, 15, left_ir_reading, right_ir_reading)};
+
         m_num_data_pts++;
+
         clear_screen();
         print_string("Data");
         lcd_cursor(5, 0);
-        print_num((u16)(m_num_data_pts));
+        print_num(m_num_data_pts);
         lcd_cursor(0, 1);
         print_num(left_ir_reading);
         lcd_cursor(4, 1);

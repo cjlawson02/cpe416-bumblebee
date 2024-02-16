@@ -43,12 +43,12 @@ float get_IR_amount(u08 raw_reading)
 
 float get_left_IR_amount(u08 left_reading_raw)
 {
-    return get_IR_amount(get_left_IR_raw());
+    return get_IR_amount(left_reading_raw);
 }
 
 float get_right_IR_amount(u08 right_reading_raw)
 {
-    return get_IR_amount(get_right_IR_raw());
+    return get_IR_amount(right_reading_raw);
 }
 
 float get_left_IR_amount()

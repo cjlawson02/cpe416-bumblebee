@@ -48,7 +48,7 @@ private:
     unsigned long m_offTrackInitTime;
     unsigned long m_offTrackWaitTime;
     struct TrainingData m_data_pts[MAX_DATA_PTS];
-    u16 m_num_data_pts = 0;
+    size_t m_num_data_pts = 0;
 
     void periodic();
 
