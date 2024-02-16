@@ -3,12 +3,12 @@
 // Description: Robot class to run the robot.
 
 #include "robot.h"
-#include <util/delay.h>
 
 Robot::Robot() : m_controllerType(PID_MODE),
                  m_drivetrain(Drivetrain(SERVO0_PIN, SERVO1_PIN)),
                  m_button(ButtonDebouncer(10)),
                  m_pidController(PID(12.0, 0.0, 1.0)),
+                 m_neuralNetwork(NeuralNetwork({2, 2, 1})),
                  m_lastWorkingDir(1),
                  m_offTrackMode(false),
                  m_offTrackInitTime(0),

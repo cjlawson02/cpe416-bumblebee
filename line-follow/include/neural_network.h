@@ -3,6 +3,7 @@
 #include <Bumblebee.h>
 #include <vector>
 #include <cstdlib>
+#include <new.h>
 #include "neuron.h"
 
 class NeuralNetwork

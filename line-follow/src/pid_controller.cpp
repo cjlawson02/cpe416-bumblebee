@@ -48,11 +48,6 @@ void PID::setBounds(float min, float max)
 
 float PID::calcOutput(float actual)
 {
-    return calcOutput(actual, millis());
-}
-
-float PID::calcOutput(float actual, u16 time)
-{
     float error = m_target - actual;
     float derivative = 0;
     float output;
@@ -85,11 +80,6 @@ float PID::calcOutput(float actual, u16 time)
 }
 
 float PID::calcOutputWithError(float error)
-{
-    return calcOutputWithError(error, millis());
-}
-
-float PID::calcOutputWithError(float error, u16 time)
 {
     float derivative = 0;
     float output;

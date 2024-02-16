@@ -21,11 +21,9 @@ public:
 
     // These calculate output based on the target and actual
     float calcOutput(float actual);
-    float calcOutput(float actual, u16 timeMs);
 
     // These calculate output based on error
     float calcOutputWithError(float error);
-    float calcOutputWithError(float error, u16 timeMs);
 
 private:
     float m_Kp;

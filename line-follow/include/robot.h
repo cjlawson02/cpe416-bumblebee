@@ -5,11 +5,13 @@
 #pragma once
 
 #include <Bumblebee.h>
+#include <util/delay.h>
 #include "timer.h"
 #include "drivetrain.h"
 #include "debouncer.h"
 #include "pid_controller.h"
 #include "light_sensor.h"
+#include "neural_network.h"
 
 #define MAX_DATA_PTS 100
 
@@ -42,6 +44,7 @@ private:
     Drivetrain m_drivetrain;
     ButtonDebouncer m_button;
     PID m_pidController;
+    NeuralNetwork m_neuralNetwork;
 
     int m_lastWorkingDir;
     bool m_offTrackMode;
