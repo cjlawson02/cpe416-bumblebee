@@ -30,7 +30,7 @@ public:
 
 private:
     std::vector<size_t> m_topology;
-    std::vector<std::vector<Neuron>> neuronLayers;
+    std::vector<std::vector<Neuron *>> neuronLayers;
 
     std::vector<float> getRandWeights(const size_t numWeights);
 };

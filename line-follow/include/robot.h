@@ -6,6 +6,7 @@
 
 #include <Bumblebee.h>
 #include <util/delay.h>
+#include <vector>
 #include "timer.h"
 #include "drivetrain.h"
 #include "debouncer.h"
@@ -50,8 +51,7 @@ private:
     bool m_offTrackMode;
     unsigned long m_offTrackInitTime;
     unsigned long m_offTrackWaitTime;
-    struct TrainingData m_data_pts[MAX_DATA_PTS];
-    size_t m_num_data_pts = 0;
+    std::vector<struct TrainingData> m_data_pts;
 
     void periodic();
 

@@ -5,12 +5,15 @@ NeuralNetwork::NeuralNetwork(const std::vector<size_t> topology)
 {
     for (size_t i = 0; i < m_topology.size(); i++)
     {
+        std::vector<Neuron *> layer;
         size_t numNeurons = m_topology[i];
         for (size_t j = 0; j < numNeurons; j++)
         {
-            Neuron neuron = Neuron(getRandWeights(3), 0.0);
-            neuronLayers[j].push_back(neuron);
+            // TODO: fix num weights
+            Neuron *neuron = new Neuron(getRandWeights(3), 0.0);
+            layer.push_back(neuron);
         }
+        neuronLayers.push_back(layer);
     }
 }
 
@@ -27,7 +30,7 @@ std::vector<float> NeuralNetwork::calculate(const std::vector<float> inputs)
         std::vector<float> results;
         for (size_t j = 0; j < neuronLayers[i].size(); j++)
         {
-            results.push_back(neuronLayers[i][j].calculate(in));
+            results.push_back(neuronLayers[i][j]->calculate(in));
         }
         in = results;
     }

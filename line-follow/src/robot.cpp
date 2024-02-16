@@ -151,24 +151,21 @@ void Robot::data_state_init()
     u08 right_ir_reading;
     m_drivetrain->stop();
 
-    while (!m_button->get() && m_num_data_pts < MAX_DATA_PTS)
+    while (!m_button->get())
     {
         /* code */
         _delay_ms(300);
         left_ir_reading = get_left_IR_raw();
         right_ir_reading = get_right_IR_raw();
 
-        m_data_pts[m_num_data_pts] = {
-            left_ir_reading,
-            right_ir_reading,
-            m_drivetrain->compute_proportional(m_pidController, 15, left_ir_reading, right_ir_reading)};
-
-        m_num_data_pts++;
+        m_data_pts.push_back({left_ir_reading,
+                              right_ir_reading,
+                              m_drivetrain->compute_proportional(m_pidController, 15, left_ir_reading, right_ir_reading)});
 
         clear_screen();
         print_string("Data");
         lcd_cursor(5, 0);
-        print_num(m_num_data_pts);
+        print_num(m_data_pts.size());
         lcd_cursor(0, 1);
         print_num(left_ir_reading);
         lcd_cursor(4, 1);
