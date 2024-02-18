@@ -5,7 +5,7 @@
 class ButtonDebouncer
 {
 public:
-    ButtonDebouncer(unsigned long interval) : interval_(interval), last_press_time_(0), button_state_(false), last_button_state_(false) {}
+    ButtonDebouncer(unsigned long interval) : interval_(interval), last_press_time_(0), button_state_(false), last_button_state_(false), stableSince(0) {}
 
     bool get()
     {
@@ -14,21 +14,15 @@ public:
         if (current_state != last_button_state_)
         {
             last_press_time_ = millis();
+            last_button_state_ = current_state;
+            stableSince = 0; // Reset stableSince whenever the button_state_ changes
         }
-
-        if (millis() - last_press_time_ > interval_ && current_state != button_state_)
+        else if ((millis() - last_press_time_) >= interval_)
         {
-            button_state_ = current_state;
-
-            if (button_state_ == true)
-            {
-                last_button_state_ = current_state;
-                return true;
-            }
+            button_state_ = current_state; // Update the button_state_ after the interval_ has passed without changes
         }
 
-        last_button_state_ = current_state;
-        return false;
+        return button_state_;
     }
 
 private:
@@ -36,4 +30,5 @@ private:
     unsigned long last_press_time_;
     bool button_state_;
     bool last_button_state_;
+    unsigned long stableSince;
 };
