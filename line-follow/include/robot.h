@@ -39,6 +39,8 @@ public:
     void run();
 
 private:
+    std::vector<struct TrainingData> m_dataPts;
+
     Drivetrain *m_drivetrain;
     ButtonDebouncer *m_button;
     PID *m_pidController;
@@ -51,8 +53,6 @@ private:
     TrainingMode *m_trainingMode;
     NeuralMode *m_neuralMode;
     StateManager *m_stateManager;
-
-    std::vector<struct TrainingData> m_dataPts;
 
     bool m_buttonPressed;
     unsigned long m_buttonPressTime;

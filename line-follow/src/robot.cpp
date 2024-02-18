@@ -4,7 +4,8 @@
 
 #include "robot.h"
 
-Robot::Robot() : m_drivetrain(new Drivetrain(SERVO0_PIN, SERVO1_PIN)),
+Robot::Robot() : m_dataPts(std::vector<struct TrainingData>()),
+                 m_drivetrain(new Drivetrain(SERVO0_PIN, SERVO1_PIN)),
                  m_button(new ButtonDebouncer(10)),
                  m_pidController(new PID(12.0, 0.0, 1.0)),
                  m_neuralNetwork(new NeuralNetwork(NEURAL_INPUTS, NEURAL_TOPOLOGY)),

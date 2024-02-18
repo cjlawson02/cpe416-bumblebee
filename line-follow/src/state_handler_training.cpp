@@ -19,6 +19,9 @@ void TrainingMode::init()
     {
         m_neural->train(m_data[i], m_alpha);
     }
+
+    lcd_cursor(0, 1);
+    print_string("Done");
 }
 
 void TrainingMode::periodic()
