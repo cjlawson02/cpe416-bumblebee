@@ -20,5 +20,4 @@ private:
     PID *m_pidController;
 
     unsigned long m_lastDataTime;
-    std::vector<struct TrainingData> m_data_pts;
 };

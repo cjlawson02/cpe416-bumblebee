@@ -7,7 +7,7 @@
 class TrainingMode : public IRobotState
 {
 public:
-    TrainingMode(Drivetrain *drivetrain, PID *pidController);
+    TrainingMode(NeuralNetwork *nn, std::vector<struct TrainingData> data_pts, float alpha);
     ~TrainingMode();
 
     void init() override;
@@ -15,6 +15,7 @@ public:
     void postPeriodic() override;
 
 private:
-    Drivetrain *m_drivetrain;
-    PID *m_pidController;
+    NeuralNetwork *m_neural;
+    std::vector<struct TrainingData> m_data;
+    float m_alpha;
 };

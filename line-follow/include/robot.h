@@ -27,6 +27,7 @@
     {                   \
         3, 2            \
     }
+#define NEURAL_ALPHA 0.01
 
 class Robot
 {
@@ -51,9 +52,10 @@ private:
     NeuralMode *m_neuralMode;
     StateManager *m_stateManager;
 
+    std::vector<struct TrainingData> m_dataPts;
+
     bool m_buttonPressed;
     unsigned long m_buttonPressTime;
-
     void periodic();
 
     void when_btn_pressed();
