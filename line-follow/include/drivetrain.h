@@ -7,12 +7,7 @@
 #include "pid_controller.h"
 #include "light_sensor.h"
 #include "neural_network.h"
-
-struct MotorCommand
-{                   // Structure declaration
-  float left_speed; // Member (int variable)
-  float right_speed;
-};
+#include "shared_types.h"
 
 class Drivetrain
 {
