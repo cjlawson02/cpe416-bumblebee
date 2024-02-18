@@ -149,6 +149,9 @@ void NeuralNetwork::train(TrainingData data_pt, float alpha)
         }
 
     }
+
+    //final step: copy the new network over the current one.
+    std::copy(neuronLayers.begin(), neuronLayers.end(), std::back_inserter(new_network.neuronLayers));  
 }
 
 std::vector<float> NeuralNetwork::getRandWeights(const size_t numWeights)
