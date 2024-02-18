@@ -31,7 +31,6 @@ public:
     void train(TrainingData data_pt, float alpha);
 
 private:
-    void recalc_weights(size_t layer, NeuralNetwork old_net);
     std::vector<size_t> m_topology;
     std::vector<std::vector<Neuron *>> neuronLayers;
     size_t m_num_inputs;
