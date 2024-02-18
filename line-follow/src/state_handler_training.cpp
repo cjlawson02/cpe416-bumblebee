@@ -15,9 +15,12 @@ void TrainingMode::init()
     clear_screen();
     print_string("Training");
 
-    for (size_t i = 0; i < m_data.size(); i++)
+    for (size_t i = 0; i < 500; i++)
     {
-        m_neural->train(m_data[i], m_alpha);
+        for (size_t j = 0; j < m_data.size(); j++)
+        {
+            m_neural->train(m_data[j], m_alpha);
+        }
     }
 
     lcd_cursor(0, 1);
