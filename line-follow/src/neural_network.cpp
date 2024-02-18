@@ -82,7 +82,7 @@ void NeuralNetwork::train(std::vector<struct TrainingData> data_pts)
                 {
                     total_out_pd = outputs[i] - data_pt.speeds.left_speed;
                 }
-                new_network.neuronLayers[m_topology.size() - 1][j] =
+                // new_network.neuronLayers[m_topology.size() - 1][j] =
             }
         }
 
