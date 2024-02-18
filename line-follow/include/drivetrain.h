@@ -6,6 +6,7 @@
 #include "motor.h"
 #include "pid_controller.h"
 #include "light_sensor.h"
+#include "neural_network.h"
 
 struct MotorCommand
 {                   // Structure declaration
@@ -25,6 +26,7 @@ public:
   void set_speed_turn(const float speed, const float turn);
   void stop();
   struct MotorCommand compute_proportional(PID *pid, const float fwd_speed, u08 left_ir_reading, u08 right_ir_reading);
+  struct MotorCommand compute_neural_network(NeuralNetwork *nn, const std::vector<float> inputs);
 
 private:
   int m_leftMotor;

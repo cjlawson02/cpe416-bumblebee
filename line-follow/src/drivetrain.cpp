@@ -44,3 +44,9 @@ struct MotorCommand Drivetrain::compute_proportional(PID *pid, const float fwd_s
     float turn = -pid->calcOutputWithError(get_IR_diff(left_ir_reading, right_ir_reading));
     return (struct MotorCommand){fwd_speed + turn, (fwd_speed - turn)};
 }
+
+struct MotorCommand Drivetrain::compute_neural_network(NeuralNetwork *nn, const std::vector<float> inputs)
+{
+    std::vector<float> outputs = nn->calculate(inputs);
+    return (struct MotorCommand){outputs[0], outputs[1]};
+}
