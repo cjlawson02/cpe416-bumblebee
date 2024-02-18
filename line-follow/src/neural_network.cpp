@@ -95,7 +95,7 @@ void NeuralNetwork::train(TrainingData data_pt, float alpha)
 
                 etotal_wgt_pd = etotal_outneuronop_pd*outneuronop_ONnet_pd*oNnet_wgt_pd;
 
-                new_weight = neuronLayers[m_topology.size()-1][i]->getWeight(j) - alpha*etotal_outneuronop_pd;
+                new_weight = neuronLayers[m_topology.size()-1][i]->getWeight(j) - alpha*etotal_wgt_pd;
                 //look at the current neuron
                 new_network.neuronLayers[m_topology.size()-1][i]->setWeight(j, new_weight);
                 // new_network.neuronLayers[m_topology.size() - 1][j] =
@@ -139,54 +139,16 @@ void NeuralNetwork::train(TrainingData data_pt, float alpha)
             for (size_t j = 0; j < m_num_inputs; j++)
             {
                 hNnet_pd_wgt_pd = inputs[j];
-                //etotal_wgt_pd = *hNnet_pd_wgt_pd 
-                
+                etotal_wgt_pd = etotal_hiddennueronop_pd*hiddennueronop_HNnet_pd*hNnet_pd_wgt_pd;
+                new_weight = neuronLayers[0][i]->getWeight(j) - alpha*etotal_wgt_pd;
+                new_network.neuronLayers[0][i]->setWeight(j, new_weight);
             }
-            
-
-            //   //look at the previous layer neuron inpu corresponding to weight j
-            //     oNnet_wgt_pd = neuronLayers[m_topology.size()-2][j]->calculate(inputs);
-
-            //     etotal_wgt_pd = etotal_outneuronop_pd*outneuronop_ONnet_pd*oNnet_wgt_pd;
-
-            //     new_weight = neuronLayers[m_topology.size()-1][i]->getWeight(j) - alpha*etotal_outneuronop_pd;
-            //     //look at the current neuron
-            //     new_network.neuronLayers[m_topology.size()-1][i]->setWeight(j, new_weight);
-            //     // new_network.neuronLayers[m_topology.size() - 1][j] =
-
-            //     etotal_hiddennueronop_pd += 0.0; ///update!!!
+            etotal_wgt_pd = etotal_hiddennueronop_pd*hiddennueronop_HNnet_pd*-1.0;
+            new_bias = neuronLayers[0][i]->getBias() - alpha*etotal_wgt_pd;
+            new_network.neuronLayers[0][i]->setBias(new_bias);
         }
 
-        etotal_wgt_pd = etotal_outneuronop_pd*outneuronop_ONnet_pd*-1;
-        new_bias = neuronLayers[m_topology.size()-1][i]->getBias()-alpha*etotal_wgt_pd;
-        new_network.neuronLayers[m_topology.size()-1][i]->setBias(new_bias);
-        // neuronLayers[neuronLayers.size()-1][i]
     }
-
-
-
-
-
-    //hidden layer
-    
-
-    //     //Then work on the hidden layer(s)
-    //     for (size_t i = m_topology.size()-2; i >=0; i--)
-    //     {
-
-    //         std::vector<float> results;
-    //         for (size_t j = 0; j < neuronLayers[i].size(); j++)
-    //         {
-    //             results.push_back(neuronLayers[i][j].calculate(in));
-    //         }
-    //         in = results;
-    //     }
-
-    //    //Now we can set the weights
-    //    for (size_t i = 0; i < neuronLayers[m_topology.size()-1].size(); i++)
-    //    {
-    //      weights.pop_back() neuronLayers[m_topology.size()-1][i].setWeights();
-    //    }
 }
 
 std::vector<float> NeuralNetwork::getRandWeights(const size_t numWeights)
