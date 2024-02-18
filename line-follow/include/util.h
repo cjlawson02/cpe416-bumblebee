@@ -7,6 +7,9 @@
 class Util
 {
 public:
+    /**
+     * @brief Bound a value between a min and max
+     */
     static inline float bound(float val, float min, float max)
     {
         if (val < min)
@@ -21,5 +24,13 @@ public:
         {
             return val;
         }
+    }
+
+    /**
+     * @brief Get a random value between 0 and 1
+     */
+    static inline float getRandVal()
+    {
+        return (float)rand() / (float)RAND_MAX;
     }
 };
