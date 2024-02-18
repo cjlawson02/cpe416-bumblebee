@@ -57,6 +57,7 @@ private:
 
     void print_controller_string();
     void when_btn_pressed();
+    void when_btn_held();
 
     void pid_state_periodic();
 
@@ -71,4 +72,5 @@ private:
     void neural_state_periodic();
 
     bool m_buttonPressed;
+    unsigned long m_buttonPressTime;
 };

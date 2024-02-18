@@ -13,7 +13,9 @@ Robot::Robot() : m_controllerType(PID_MODE),
                  m_offTrackMode(false),
                  m_offTrackInitTime(0),
                  m_offTrackWaitTime(100),
-                 m_lastDataTime(0)
+                 m_lastDataTime(0),
+                 m_buttonPressed(false),
+                 m_buttonPressTime(0)
 {
     m_pidController->setBounds(-100, 100);
 }
@@ -43,17 +45,21 @@ void Robot::run()
 void Robot::periodic()
 {
     // Handle controller change
-    if (m_button->get())
-    {
-        if (!m_buttonPressed)
-        {
-            m_buttonPressed = true;
-            when_btn_pressed();
-        }
-    }
-    else
+    bool buttonState = m_button->get();
+    if (!buttonState && m_buttonPressed)
     {
         m_buttonPressed = false;
+        when_btn_pressed();
+    }
+    else if (buttonState && !m_buttonPressed)
+    {
+        m_buttonPressed = true;
+    }
+    // If button held for 2 seconds, call when_btn_held
+    else if (buttonState && m_buttonPressed && millis() - m_buttonPressTime > 2000)
+    {
+        m_buttonPressed = false;
+        when_btn_held();
     }
 
     // Controller periodic loop
@@ -105,6 +111,25 @@ void Robot::when_btn_pressed()
     }
 
     print_controller_string();
+}
+
+void Robot::when_btn_held()
+{
+    switch (m_controllerType)
+    {
+    case PID_MODE:
+        break;
+    case DATA_COLLECT_MODE:
+        break;
+    case DATA_WAIT_MODE:
+        break;
+    case TRAINING_MODE:
+        break;
+    case NEURAL_NETWORK_MODE:
+        break;
+    default:
+        break;
+    }
 }
 
 void Robot::pid_state_periodic()
