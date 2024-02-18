@@ -5,7 +5,9 @@
 #include <cstdlib>
 #include <new.h>
 #include "neuron.h"
-#include "robot.h"
+#include "shared_types.h"
+#include "util.h"
+#include "light_sensor.h"
 
 class NeuralNetwork
 {
