@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <new.h>
 #include "neuron.h"
+#include "robot.h"
 
 class NeuralNetwork
 {
@@ -25,10 +26,13 @@ public:
      * @return The output of the neural network.
      */
     std::vector<float> calculate(const std::vector<float> inputs);
+    void train(std::vector<struct TrainingData> data_pts);
 
 private:
+    void NeuralNetwork::recalc_weights(size_t layer, NeuralNetwork old_net);
     std::vector<size_t> m_topology;
     std::vector<std::vector<Neuron *>> neuronLayers;
+    size_t m_num_inputs;
 
     std::vector<float> getRandWeights(const size_t numWeights);
 };

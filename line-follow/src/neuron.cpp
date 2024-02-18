@@ -23,3 +23,8 @@ float Neuron::activation(float net)
 {
     return 1 / (1 + exp(-net));
 }
+
+void Neuron::setWeights(std::vector<float> weights)
+{
+    m_weights = weights;
+}

@@ -18,8 +18,15 @@
 #define NEURAL_INPUTS 2
 #define NEURAL_TOPOLOGY \
     {                   \
-        3, 3, 2         \
+        3, 2         \
     }
+
+ struct TrainingData
+{ // Structure declaration
+        u08 left_ir_reading;
+        u08 right_ir_reading;
+        MotorCommand speeds;
+};
 
 class Robot
 {
@@ -34,13 +41,6 @@ public:
         DATA_WAIT_MODE,
         TRAINING_MODE,
         NEURAL_NETWORK_MODE
-    };
-
-    struct TrainingData
-    { // Structure declaration
-        u08 left_ir_reading;
-        u08 right_ir_reading;
-        MotorCommand speeds;
     };
 
     void setup();
