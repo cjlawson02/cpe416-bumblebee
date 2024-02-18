@@ -23,6 +23,17 @@ Robot::Robot() : m_drivetrain(new Drivetrain(SERVO0_PIN, SERVO1_PIN)),
 
 Robot::~Robot()
 {
+    delete m_drivetrain;
+    delete m_button;
+    delete m_pidController;
+    delete m_neuralNetwork;
+    delete m_tuningMode;
+    delete m_pidMode;
+    delete m_dataCollectMode;
+    delete m_dataWaitMode;
+    delete m_trainingMode;
+    delete m_neuralMode;
+    delete m_stateManager;
 }
 
 void Robot::setup()
