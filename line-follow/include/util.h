@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <stdlib.h>
+
 class Util
 {
 public:

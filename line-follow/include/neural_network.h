@@ -29,7 +29,7 @@ public:
     void train(std::vector<struct TrainingData> data_pts);
 
 private:
-    void NeuralNetwork::recalc_weights(size_t layer, NeuralNetwork old_net);
+    void recalc_weights(size_t layer, NeuralNetwork old_net);
     std::vector<size_t> m_topology;
     std::vector<std::vector<Neuron *>> neuronLayers;
     size_t m_num_inputs;
