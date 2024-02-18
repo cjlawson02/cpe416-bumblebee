@@ -3,10 +3,10 @@
 // Description: Light sensor helper library for Lab 2 parts 2 and 3
 #include "light_sensor.h"
 
-const int LEFT_WHITE_VAL = 110;
-const int LEFT_BLACK_VAL = 180;
-const int RIGHT_WHITE_VAL = 185;
-const int RIGHT_BLACK_VAL = 220;
+const int LEFT_WHITE_VAL = 160;
+const int LEFT_BLACK_VAL = 192;
+const int RIGHT_WHITE_VAL = 195;
+const int RIGHT_BLACK_VAL = 215;
 const int LEFT_DIFF = LEFT_BLACK_VAL - LEFT_WHITE_VAL;
 const int RIGHT_DIFF = RIGHT_BLACK_VAL - RIGHT_WHITE_VAL;
 const float PERCENT_THRESHOLD = 0.5;
