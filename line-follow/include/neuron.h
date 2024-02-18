@@ -42,6 +42,11 @@ public:
      */
     void setWeights(std::vector<float> weights);
 
+    void setWeight(size_t number, float weight);
+    float getWeight(size_t number);
+    void setBias(float bias);
+    float getBias();
+
 private:
     std::vector<float> m_weights; // The weights of the neuron
     float m_bias;                 // The bias value of the neuron

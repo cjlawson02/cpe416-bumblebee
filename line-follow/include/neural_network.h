@@ -26,7 +26,7 @@ public:
      * @return The output of the neural network.
      */
     std::vector<float> calculate(const std::vector<float> inputs);
-    void train(std::vector<struct TrainingData> data_pts);
+    void NeuralNetwork::train(TrainingData data_pt, float alpha);
 
 private:
     void recalc_weights(size_t layer, NeuralNetwork old_net);

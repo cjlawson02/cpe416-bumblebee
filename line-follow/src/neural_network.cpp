@@ -50,44 +50,125 @@ void NeuralNetwork::recalc_weights(size_t layer, NeuralNetwork old_net)
 {
 }
 
-void NeuralNetwork::train(std::vector<struct TrainingData> data_pts)
+void NeuralNetwork::train(TrainingData data_pt, float alpha)
 {
     // Back propagation
     // outer for loop will go through all the points
 
     // First work on the output layer
-    TrainingData data_pt = data_pts[0];
     // must scale analog inputs to a value between 0 and 1
     std::vector<float> inputs = {analog_to_percent(data_pt.left_ir_reading), analog_to_percent(data_pt.right_ir_reading)};
     std::vector<float> outputs = calculate(inputs);
-
-    for (size_t i = 0; i < outputs.size(); i++)
-    {
-    }
 
     // does in[left] correspond to output[left]?
     // the new network we will calculate.'
     // make the new network we will write update values too
     NeuralNetwork new_network(m_num_inputs, m_topology);
 
+    float etotal_wgt_pd;
+    float etotal_outneuronop_pd, outneuronop_ONnet_pd, oNnet_wgt_pd;
+    float etotal_hiddennueronop_pd, hiddennueronop_HNnet_pd, hNnet_pd_wgt_pd;
+    //float eoutneuron_HNop; 
+    float mapped_target;
+    float speed_to_map;
+    float new_weight, new_bias;
+    std::vector<float> etotalONX_ONXnet_pd;
+
+                
+    //Train the output layer
     for (size_t i = 0; i < m_topology.back(); i++)
     {
+        speed_to_map = (i==0) ? data_pt.speeds.left_speed : data_pt.speeds.right_speed;
+        mapped_target = Util::map(speed_to_map, -100, 100, 0.0, 1.0);  
+        etotal_outneuronop_pd = outputs[i] - mapped_target;
+        outneuronop_ONnet_pd = outputs[i]*(1-outputs[i]);
+        etotalONX_ONXnet_pd.push_back(etotal_outneuronop_pd*outneuronop_ONnet_pd);
+
         // work on the weights first
         if (m_topology.size() > 1)
         {
+            //go through all the weights (number of weights is number of neurons in previous layer)
             for (size_t j = 0; j < m_topology[m_topology.size() - 2]; j++)
             {
-                float total_out_pd;
-                if (i == 0)
-                {
-                    total_out_pd = outputs[i] - data_pt.speeds.left_speed;
-                }
+                //look at the previous layer neuron inpu corresponding to weight j
+                oNnet_wgt_pd = neuronLayers[m_topology.size()-2][j]->calculate(inputs);
+
+                etotal_wgt_pd = etotal_outneuronop_pd*outneuronop_ONnet_pd*oNnet_wgt_pd;
+
+                new_weight = neuronLayers[m_topology.size()-1][i]->getWeight(j) - alpha*etotal_outneuronop_pd;
+                //look at the current neuron
+                new_network.neuronLayers[m_topology.size()-1][i]->setWeight(j, new_weight);
                 // new_network.neuronLayers[m_topology.size() - 1][j] =
             }
         }
 
+        etotal_wgt_pd = etotal_outneuronop_pd*outneuronop_ONnet_pd*-1.0;
+        new_bias = neuronLayers[m_topology.size()-1][i]->getBias()-alpha*etotal_wgt_pd;
+        new_network.neuronLayers[m_topology.size()-1][i]->setBias(new_bias);
         // neuronLayers[neuronLayers.size()-1][i]
     }
+
+    //NO OTHER INTERMEDIATE HIDDEN LAYERS ASSUMED
+
+    float out_hidden_neuron;
+
+    //input layer (hidden layer 0). For each neuron in the hidden layer
+    for (size_t i = 0; i < m_topology.front(); i++)
+    {
+        //update input 
+        speed_to_map = (i==0) ? data_pt.speeds.left_speed : data_pt.speeds.right_speed;
+        mapped_target = Util::map(speed_to_map, -100, 100, 0.0, 1.0);  
+        etotal_outneuronop_pd = outputs[i] - mapped_target;
+        outneuronop_ONnet_pd = outputs[i]*(1-outputs[i]);
+        // work on the weights first
+        if (m_topology.size() > 1)
+        {
+            out_hidden_neuron = neuronLayers[0][i]->calculate(inputs);
+            hiddennueronop_HNnet_pd = (out_hidden_neuron)*(1-out_hidden_neuron);
+
+            etotal_hiddennueronop_pd = 0.0;
+            //go through all the output neurons connected to this neuron
+
+            //computer stuff based on connections to output layer
+            for (size_t j = 0; j < m_topology[m_topology.size() - 1]; j++)
+            {
+                etotal_hiddennueronop_pd += (etotalONX_ONXnet_pd[j]*(neuronLayers[m_topology.size()-1][j]->getWeight(i)));
+            }
+
+            //then compute stuff based on the inputs recieved (the third term we need) and update the two associatd weights
+            for (size_t j = 0; j < m_num_inputs; j++)
+            {
+                hNnet_pd_wgt_pd = inputs[j];
+                //etotal_wgt_pd = *hNnet_pd_wgt_pd 
+                
+            }
+            
+
+            //   //look at the previous layer neuron inpu corresponding to weight j
+            //     oNnet_wgt_pd = neuronLayers[m_topology.size()-2][j]->calculate(inputs);
+
+            //     etotal_wgt_pd = etotal_outneuronop_pd*outneuronop_ONnet_pd*oNnet_wgt_pd;
+
+            //     new_weight = neuronLayers[m_topology.size()-1][i]->getWeight(j) - alpha*etotal_outneuronop_pd;
+            //     //look at the current neuron
+            //     new_network.neuronLayers[m_topology.size()-1][i]->setWeight(j, new_weight);
+            //     // new_network.neuronLayers[m_topology.size() - 1][j] =
+
+            //     etotal_hiddennueronop_pd += 0.0; ///update!!!
+        }
+
+        etotal_wgt_pd = etotal_outneuronop_pd*outneuronop_ONnet_pd*-1;
+        new_bias = neuronLayers[m_topology.size()-1][i]->getBias()-alpha*etotal_wgt_pd;
+        new_network.neuronLayers[m_topology.size()-1][i]->setBias(new_bias);
+        // neuronLayers[neuronLayers.size()-1][i]
+    }
+
+
+
+
+
+    //hidden layer
+    
 
     //     //Then work on the hidden layer(s)
     //     for (size_t i = m_topology.size()-2; i >=0; i--)
