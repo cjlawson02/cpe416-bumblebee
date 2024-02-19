@@ -8,7 +8,7 @@
 class DataCollectMode : public IRobotState
 {
 public:
-    DataCollectMode(Drivetrain *drivetrain, PID *pidController, std::vector<struct TrainingData> data);
+    DataCollectMode(Drivetrain *drivetrain, PID *pidController, std::vector<struct TrainingData> *data);
     ~DataCollectMode();
 
     void init() override;
@@ -20,5 +20,5 @@ private:
     PID *m_pidController;
 
     unsigned long m_lastDataTime;
-    std::vector<struct TrainingData> m_data;
+    std::vector<struct TrainingData> *m_data;
 };

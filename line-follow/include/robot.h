@@ -27,7 +27,7 @@
     {                   \
         3, 2            \
     }
-#define NEURAL_ALPHA 0.01
+#define NEURAL_ALPHA 0.3
 
 class Robot
 {
@@ -44,7 +44,7 @@ private:
     Drivetrain *m_drivetrain;
     ButtonDebouncer *m_button;
     PID *m_pidController;
-    NeuralNetwork *m_neuralNetwork;
+    NeuralNetwork *m_neuralNetwork, *m_temp_neuralNetwork;
 
     TuningMode *m_tuningMode;
     PIDMode *m_pidMode;

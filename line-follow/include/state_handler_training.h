@@ -7,7 +7,7 @@
 class TrainingMode : public IRobotState
 {
 public:
-    TrainingMode(NeuralNetwork *nn, std::vector<struct TrainingData> data_pts, float alpha);
+    TrainingMode(NeuralNetwork *nn, std::vector<struct TrainingData> *data_pts, float alpha);
     ~TrainingMode();
 
     void init() override;
@@ -16,6 +16,6 @@ public:
 
 private:
     NeuralNetwork *m_neural;
-    std::vector<struct TrainingData> m_data;
+    std::vector<struct TrainingData> *m_data;
     float m_alpha;
 };

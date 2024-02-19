@@ -20,10 +20,11 @@ void NeuralMode::periodic()
 {
     // TODO: check percent vs raw
     struct MotorCommand speeds;
-    speeds = m_drivetrain->compute_neural_network(m_neuralNetwork, {get_left_IR_percent(), get_right_IR_percent()});
+    speeds = m_drivetrain->compute_neural_network(m_neuralNetwork, {analog_to_percent(get_left_IR_raw()), analog_to_percent(get_right_IR_raw())});
     m_drivetrain->set_speed(speeds);
 }
 
 void NeuralMode::postPeriodic()
 {
+    m_drivetrain->stop();
 }

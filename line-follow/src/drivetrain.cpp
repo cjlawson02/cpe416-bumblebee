@@ -48,5 +48,6 @@ struct MotorCommand Drivetrain::compute_proportional(PID *pid, const float fwd_s
 struct MotorCommand Drivetrain::compute_neural_network(NeuralNetwork *nn, const std::vector<float> inputs)
 {
     std::vector<float> outputs = nn->calculate(inputs);
+    outputs = {Util::map(outputs[0], 0.0, 1.0, -100.0, 100.0), Util::map(outputs[1], 0.0, 1.0, -100.0, 100.0)};
     return (struct MotorCommand){outputs[0], outputs[1]};
 }
