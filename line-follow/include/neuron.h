@@ -44,6 +44,7 @@ public:
 
     void setWeight(size_t number, float weight);
     float getWeight(size_t number);
+    std::vector<float> getWeights();
     void setBias(float bias);
     float getBias();
 

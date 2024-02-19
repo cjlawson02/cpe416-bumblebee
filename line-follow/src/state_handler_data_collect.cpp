@@ -22,12 +22,12 @@ void DataCollectMode::periodic()
     u08 left_ir_reading;
     u08 right_ir_reading;
 
-    if (millis() - m_lastDataTime > 300)
+    if (millis() - m_lastDataTime > 150 && (m_data->size() < MAX_DATA_PTS))
     {
         m_lastDataTime = millis();
         left_ir_reading = get_left_IR_raw();
         right_ir_reading = get_right_IR_raw();
-
+        //try slower forward speed? 5?
         m_data->push_back({left_ir_reading,
                           right_ir_reading,
                           m_drivetrain->compute_proportional(m_pidController, 15, left_ir_reading, right_ir_reading)});

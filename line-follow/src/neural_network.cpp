@@ -19,6 +19,21 @@ NeuralNetwork::NeuralNetwork(const size_t numInputs, const std::vector<size_t> t
     }
 }
 
+//Overwrites values of passed in neueral network to current neural network of same topology
+void NeuralNetwork::copy_in_nn(NeuralNetwork *nn)
+{
+    for (size_t i = 0; i < m_topology.size(); i++)
+    {
+        size_t numNeurons = m_topology[i];
+        for (size_t j = 0; j < numNeurons; j++)
+        {
+            // If we are on the first layer, the number of inputs is the number of inputs to the network
+            neuronLayers[i][j]->setBias(nn->neuronLayers[i][j]->getBias());
+            neuronLayers[i][j]->setWeights(nn->neuronLayers[i][j]->getWeights());
+        }
+    }
+}
+
 NeuralNetwork::~NeuralNetwork()
 {
     //clear out the neurons
@@ -59,7 +74,7 @@ std::vector<float> NeuralNetwork::calculate(const std::vector<float> inputs)
     return in;
 }
 
-void NeuralNetwork::train(TrainingData data_pt, float alpha)
+void NeuralNetwork::train(TrainingData data_pt, NeuralNetwork *temp_network, float alpha)
 {
     // Back propagation
     // outer for loop will go through all the points
@@ -73,7 +88,7 @@ void NeuralNetwork::train(TrainingData data_pt, float alpha)
     // does in[left] correspond to output[left]?
     // the new network we will calculate.'
     // make the new network we will write update values too
-    NeuralNetwork new_network(m_num_inputs, m_topology);
+    //NeuralNetwork new_network(m_num_inputs, m_topology);
 
     float etotal_wgt_pd;
     float etotal_outneuronop_pd, outneuronop_ONnet_pd, oNnet_wgt_pd;
@@ -106,15 +121,18 @@ void NeuralNetwork::train(TrainingData data_pt, float alpha)
 
                 new_weight = neuronLayers[m_topology.size() - 1][i]->getWeight(j) - alpha * etotal_wgt_pd;
                 // look at the current neuron
-                new_network.neuronLayers[m_topology.size() - 1][i]->setWeight(j, new_weight);
+                temp_network->neuronLayers[m_topology.size() - 1][i]->setWeight(j, new_weight);
+                //new_network.neuronLayers[m_topology.size() - 1][i]->setWeight(j, new_weight);
                 // new_network.neuronLayers[m_topology.size() - 1][j] =
             }
         }
 
         etotal_wgt_pd = etotal_outneuronop_pd * outneuronop_ONnet_pd * -1.0;
         new_bias = neuronLayers[m_topology.size() - 1][i]->getBias() - alpha * etotal_wgt_pd;
-        new_network.neuronLayers[m_topology.size() - 1][i]->setBias(new_bias);
+        temp_network->neuronLayers[m_topology.size() - 1][i]->setBias(new_bias);
+        //new_network.neuronLayers[m_topology.size() - 1][i]->setBias(new_bias);
         // neuronLayers[neuronLayers.size()-1][i]
+        
     }
 
     // NO OTHER INTERMEDIATE HIDDEN LAYERS ASSUMED
@@ -145,24 +163,28 @@ void NeuralNetwork::train(TrainingData data_pt, float alpha)
                 hNnet_wgt_pd = inputs[j];
                 etotal_wgt_pd = etotal_hiddennueronop_pd * hiddennueronop_HNnet_pd * hNnet_wgt_pd;
                 new_weight = neuronLayers[0][i]->getWeight(j) - alpha * etotal_wgt_pd;
-                new_network.neuronLayers[0][i]->setWeight(j, new_weight);
+                temp_network->neuronLayers[0][i]->setWeight(j, new_weight);
+                //new_network.neuronLayers[0][i]->setWeight(j, new_weight);
             }
             etotal_wgt_pd = etotal_hiddennueronop_pd * hiddennueronop_HNnet_pd * -1.0;
             new_bias = neuronLayers[0][i]->getBias() - alpha * etotal_wgt_pd;
-            new_network.neuronLayers[0][i]->setBias(new_bias);
+            //new_network.neuronLayers[0][i]->setBias(new_bias);
+            temp_network->neuronLayers[0][i]->setBias(new_bias);
         }
     }
 
    // etotalONX_ONXnet_pd.pop_back();
     //etotalONX_ONXnet_pd.pop_back();
  
-    clear_screen();
+    //clear_screen();
     // final step: copy the new network over the current one.
-    std::copy(neuronLayers.begin(), neuronLayers.end(), std::back_inserter(new_network.neuronLayers));
+   // std::copy(neuronLayers.begin(), neuronLayers.end(), std::back_inserter(temp_network->neuronLayers));
+    copy_in_nn(temp_network);
+    
    
-    lcd_cursor(0, 1);
-    print_num((u16)data_pt.left_ir_reading);
-    clear_screen();
+    // lcd_cursor(0, 1);
+    // print_num((u16)data_pt.left_ir_reading);
+    // clear_screen();
     //delete new_network;
 }
 

@@ -7,14 +7,15 @@
 Robot::Robot() : m_dataPts(std::vector<struct TrainingData>()),
                  m_drivetrain(new Drivetrain(SERVO0_PIN, SERVO1_PIN)),
                  m_button(new ButtonDebouncer(10)),
-                 m_pidController(new PID(12.0, 0.0, 1.0)),
+                 //25
+                 m_pidController(new PID(27.2, 0.0, 0.0)), //12, 0, 1 Problem with d is time dependency
                  m_neuralNetwork(new NeuralNetwork(NEURAL_INPUTS, NEURAL_TOPOLOGY)),
                  m_temp_neuralNetwork(new NeuralNetwork(NEURAL_INPUTS, NEURAL_TOPOLOGY)),
                  m_tuningMode(new TuningMode()),
                  m_pidMode(new PIDMode(m_drivetrain, m_pidController)),
                  m_dataCollectMode(new DataCollectMode(m_drivetrain, m_pidController, &m_dataPts)),
                  m_dataWaitMode(new DataWaitMode(m_drivetrain, m_pidController)),
-                 m_trainingMode(new TrainingMode(m_neuralNetwork, &m_dataPts, NEURAL_ALPHA)),
+                 m_trainingMode(new TrainingMode(m_neuralNetwork,m_temp_neuralNetwork, &m_dataPts, NEURAL_ALPHA)),
                  m_neuralMode(new NeuralMode(m_drivetrain, m_neuralNetwork)),
                  m_stateManager(new StateManager()),
                  m_buttonPressed(false),

@@ -29,6 +29,11 @@ void Neuron::setWeights(std::vector<float> weights)
     m_weights = weights;
 }
 
+std::vector<float> Neuron::getWeights()
+{
+    return m_weights;
+}
+
 void Neuron::setWeight(size_t number, float weight)
 {
     if(number<m_weights.size())

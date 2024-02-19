@@ -28,7 +28,8 @@ public:
      * @return The output of the neural network.
      */
     std::vector<float> calculate(const std::vector<float> inputs);
-    void train(TrainingData data_pt, float alpha);
+    void train(TrainingData data_pt, NeuralNetwork *temp_network, float alpha);
+    void copy_in_nn(NeuralNetwork *nn);
 
 private:
     std::vector<size_t> m_topology;

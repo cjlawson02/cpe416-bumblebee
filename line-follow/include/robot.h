@@ -21,13 +21,12 @@
 #include "state_handler_training.h"
 #include "state_handler_neural.h"
 
-#define MAX_DATA_PTS 100
 #define NEURAL_INPUTS 2
 #define NEURAL_TOPOLOGY \
     {                   \
         3, 2            \
     }
-#define NEURAL_ALPHA 0.3
+#define NEURAL_ALPHA 0.2//0.3
 
 class Robot
 {
