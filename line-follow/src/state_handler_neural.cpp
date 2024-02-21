@@ -28,3 +28,12 @@ void NeuralMode::postPeriodic()
 {
     m_drivetrain->stop();
 }
+
+bool NeuralMode::btnPressed()
+{
+    return true;
+}
+
+void NeuralMode::btnHeld()
+{
+}

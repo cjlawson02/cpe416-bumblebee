@@ -5,7 +5,7 @@
 #include "drivetrain.h"
 #include "pid_controller.h"
 
-#define MAX_DATA_PTS 126 //determined experimetnally after uploading code
+#define MAX_DATA_PTS 126 // determined experimetnally after uploading code
 
 class DataCollectMode : public IRobotState
 {
@@ -16,6 +16,8 @@ public:
     void init() override;
     void periodic() override;
     void postPeriodic() override;
+    bool btnPressed() override;
+    void btnHeld() override;
 
 private:
     Drivetrain *m_drivetrain;

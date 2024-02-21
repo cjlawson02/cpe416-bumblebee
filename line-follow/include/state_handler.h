@@ -19,6 +19,8 @@ public:
     virtual void init() = 0;
     virtual void periodic() = 0;
     virtual void postPeriodic() = 0;
+    virtual bool btnPressed() = 0;
+    virtual void btnHeld() = 0;
 
     RobotState getState()
     {

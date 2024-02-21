@@ -3,14 +3,6 @@
 // Description: Light sensor helper library for Lab 2 parts 2 and 3
 #include "light_sensor.h"
 
-const int LEFT_WHITE_VAL = 160;
-const int LEFT_BLACK_VAL = 192;
-const int RIGHT_WHITE_VAL = 195;
-const int RIGHT_BLACK_VAL = 215;
-const int LEFT_DIFF = LEFT_BLACK_VAL - LEFT_WHITE_VAL;
-const int RIGHT_DIFF = RIGHT_BLACK_VAL - RIGHT_WHITE_VAL;
-const float PERCENT_THRESHOLD = 0.5;
-
 float analog_to_percent(u08 analog_value)
 {
     return (float)analog_value / 255.0;
@@ -63,12 +55,14 @@ float get_right_IR_amount()
 
 float get_left_IR_percent(float left_IR_amount)
 {
-    return Util::bound((left_IR_amount - LEFT_WHITE_VAL) / LEFT_DIFF, 0, 1);
+    const int LEFT_DIFF = CalibrationData::LEFT_BLACK - CalibrationData::LEFT_WHITE;
+    return Util::bound((left_IR_amount - CalibrationData::LEFT_WHITE) / LEFT_DIFF, 0, 1);
 }
 
 float get_right_IR_percent(float right_IR_amount)
 {
-    return Util::bound((right_IR_amount - RIGHT_WHITE_VAL) / RIGHT_DIFF, 0, 1);
+    const int RIGHT_DIFF = CalibrationData::RIGHT_BLACK - CalibrationData::RIGHT_WHITE;
+    return Util::bound((right_IR_amount - CalibrationData::RIGHT_WHITE) / RIGHT_DIFF, 0, 1);
 }
 
 float get_left_IR_percent()
@@ -98,5 +92,5 @@ float get_IR_diff(u08 analog_left_ir, u08 analog_right_ir)
 
 bool off_track()
 {
-    return (get_left_IR_percent() < PERCENT_THRESHOLD) && (get_right_IR_percent() < PERCENT_THRESHOLD);
+    return (get_left_IR_percent() < CalibrationData::PERCENT_THRESHOLD) && (get_right_IR_percent() < CalibrationData::PERCENT_THRESHOLD);
 }

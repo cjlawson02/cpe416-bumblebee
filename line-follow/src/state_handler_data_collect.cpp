@@ -27,10 +27,10 @@ void DataCollectMode::periodic()
         m_lastDataTime = millis();
         left_ir_reading = get_left_IR_raw();
         right_ir_reading = get_right_IR_raw();
-        //try slower forward speed? 5?
+        // try slower forward speed? 5?
         m_data->push_back({left_ir_reading,
-                          right_ir_reading,
-                          m_drivetrain->compute_proportional(m_pidController, 15, left_ir_reading, right_ir_reading)});
+                           right_ir_reading,
+                           m_drivetrain->compute_proportional(m_pidController, 15, left_ir_reading, right_ir_reading)});
 
         clear_screen();
         print_string("Data");
@@ -44,5 +44,14 @@ void DataCollectMode::periodic()
 }
 
 void DataCollectMode::postPeriodic()
+{
+}
+
+bool DataCollectMode::btnPressed()
+{
+    return true;
+}
+
+void DataCollectMode::btnHeld()
 {
 }

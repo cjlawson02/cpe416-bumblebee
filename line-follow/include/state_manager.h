@@ -45,6 +45,24 @@ public:
         }
     }
 
+    bool btnPressedSignal()
+    {
+        if (m_currentState != nullptr)
+        {
+            return m_currentState->btnPressed();
+        }
+
+        return true;
+    }
+
+    void btnHeldSignal()
+    {
+        if (m_currentState != nullptr)
+        {
+            m_currentState->btnHeld();
+        }
+    }
+
     RobotState getCurrentState()
     {
         return m_currentState->getState();

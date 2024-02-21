@@ -5,6 +5,7 @@
 
 #include <Bumblebee.h>
 #include "util.h"
+#include "calibration_data.h"
 
 float analog_to_percent(u08 analog_value);
 

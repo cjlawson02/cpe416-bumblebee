@@ -28,3 +28,12 @@ void DataWaitMode::periodic()
 void DataWaitMode::postPeriodic()
 {
 }
+
+bool DataWaitMode::btnPressed()
+{
+    return true;
+}
+
+void DataWaitMode::btnHeld()
+{
+}

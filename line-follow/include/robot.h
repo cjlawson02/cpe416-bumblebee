@@ -20,13 +20,15 @@
 #include "state_handler_data_wait.h"
 #include "state_handler_training.h"
 #include "state_handler_neural.h"
+#include "calibration_data.h"
 
 #define NEURAL_INPUTS 2
 #define NEURAL_TOPOLOGY \
     {                   \
         3, 2            \
     }
-#define NEURAL_ALPHA 0.2//0.3
+#define NEURAL_ALPHA 0.2 // 0.3
+#define BTN_HOLD_TIME 250
 
 class Robot
 {
@@ -54,6 +56,7 @@ private:
     StateManager *m_stateManager;
 
     bool m_buttonPressed;
+    bool m_longPressTriggered;
     unsigned long m_buttonPressTime;
     void periodic();
 

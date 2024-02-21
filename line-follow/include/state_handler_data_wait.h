@@ -14,6 +14,8 @@ public:
     void init() override;
     void periodic() override;
     void postPeriodic() override;
+    bool btnPressed() override;
+    void btnHeld() override;
 
 private:
     Drivetrain *m_drivetrain;

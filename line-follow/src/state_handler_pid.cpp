@@ -63,3 +63,12 @@ void PIDMode::periodic()
 void PIDMode::postPeriodic()
 {
 }
+
+bool PIDMode::btnPressed()
+{
+    return true;
+}
+
+void PIDMode::btnHeld()
+{
+}
