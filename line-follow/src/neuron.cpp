@@ -36,7 +36,7 @@ std::vector<float> Neuron::getWeights()
 
 void Neuron::setWeight(size_t number, float weight)
 {
-    if(number<m_weights.size())
+    if (number < m_weights.size())
     {
         m_weights[number] = weight;
     }
@@ -44,7 +44,7 @@ void Neuron::setWeight(size_t number, float weight)
 
 float Neuron::getWeight(size_t number)
 {
-    if(number<m_weights.size())
+    if (number < m_weights.size())
     {
         return m_weights[number];
     }

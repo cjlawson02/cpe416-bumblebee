@@ -4,7 +4,6 @@
 #include "state_handler.h"
 #include "light_sensor.h"
 #include "calibration_data.h"
-#include <util/delay.h>
 
 class TuningMode : public IRobotState
 {

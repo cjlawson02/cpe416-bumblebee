@@ -51,7 +51,6 @@ void TuningMode::periodic()
             break;
         }
     }
-    _delay_ms(10);
 }
 
 void TuningMode::postPeriodic()

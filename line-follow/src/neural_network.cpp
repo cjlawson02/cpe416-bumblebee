@@ -19,7 +19,7 @@ NeuralNetwork::NeuralNetwork(const size_t numInputs, const std::vector<size_t> t
     }
 }
 
-//Overwrites values of passed in neueral network to current neural network of same topology
+// Overwrites values of passed in neueral network to current neural network of same topology
 void NeuralNetwork::copy_in_nn(NeuralNetwork *nn)
 {
     for (size_t i = 0; i < m_topology.size(); i++)
@@ -36,19 +36,6 @@ void NeuralNetwork::copy_in_nn(NeuralNetwork *nn)
 
 NeuralNetwork::~NeuralNetwork()
 {
-    //clear out the neurons
-    
-    // for (size_t i = 0; i < m_topology.size(); i++)
-    // {
-    //     std::vector<Neuron *> layer;
-    //     size_t numNeurons = m_topology[i];
-    //     for (size_t j = 0; j < numNeurons; j++)
-    //     {
-    //         //delete layer[i];
-    //         layer.pop_back(); //idk why pop back works and delete does not yet
-    //     }
-    //     neuronLayers.pop_back();
-    // } 
 }
 
 std::vector<float> NeuralNetwork::calculate(const std::vector<float> inputs)
@@ -81,19 +68,13 @@ void NeuralNetwork::train(TrainingData data_pt, NeuralNetwork *temp_network, flo
 
     // First work on the output layer
     // must scale analog inputs to a value between 0 and 1
-  
+
     std::vector<float> inputs = {analog_to_percent(data_pt.left_ir_reading), analog_to_percent(data_pt.right_ir_reading)};
-    std::vector<float> outputs = calculate(inputs); //neural netowrk outputs
-    
-    // does in[left] correspond to output[left]?
-    // the new network we will calculate.'
-    // make the new network we will write update values too
-    //NeuralNetwork new_network(m_num_inputs, m_topology);
+    std::vector<float> outputs = calculate(inputs); // neural netowrk outputs
 
     float etotal_wgt_pd;
     float etotal_outneuronop_pd, outneuronop_ONnet_pd, oNnet_wgt_pd;
     float etotal_hiddennueronop_pd, hiddennueronop_HNnet_pd, hNnet_wgt_pd;
-    // float eoutneuron_HNop;
     float mapped_target;
     float speed_to_map;
     float new_weight, new_bias;
@@ -122,17 +103,12 @@ void NeuralNetwork::train(TrainingData data_pt, NeuralNetwork *temp_network, flo
                 new_weight = neuronLayers[m_topology.size() - 1][i]->getWeight(j) - alpha * etotal_wgt_pd;
                 // look at the current neuron
                 temp_network->neuronLayers[m_topology.size() - 1][i]->setWeight(j, new_weight);
-                //new_network.neuronLayers[m_topology.size() - 1][i]->setWeight(j, new_weight);
-                // new_network.neuronLayers[m_topology.size() - 1][j] =
             }
         }
 
         etotal_wgt_pd = etotal_outneuronop_pd * outneuronop_ONnet_pd * -1.0;
         new_bias = neuronLayers[m_topology.size() - 1][i]->getBias() - alpha * etotal_wgt_pd;
         temp_network->neuronLayers[m_topology.size() - 1][i]->setBias(new_bias);
-        //new_network.neuronLayers[m_topology.size() - 1][i]->setBias(new_bias);
-        // neuronLayers[neuronLayers.size()-1][i]
-        
     }
 
     // NO OTHER INTERMEDIATE HIDDEN LAYERS ASSUMED
@@ -164,28 +140,14 @@ void NeuralNetwork::train(TrainingData data_pt, NeuralNetwork *temp_network, flo
                 etotal_wgt_pd = etotal_hiddennueronop_pd * hiddennueronop_HNnet_pd * hNnet_wgt_pd;
                 new_weight = neuronLayers[0][i]->getWeight(j) - alpha * etotal_wgt_pd;
                 temp_network->neuronLayers[0][i]->setWeight(j, new_weight);
-                //new_network.neuronLayers[0][i]->setWeight(j, new_weight);
             }
             etotal_wgt_pd = etotal_hiddennueronop_pd * hiddennueronop_HNnet_pd * -1.0;
             new_bias = neuronLayers[0][i]->getBias() - alpha * etotal_wgt_pd;
-            //new_network.neuronLayers[0][i]->setBias(new_bias);
             temp_network->neuronLayers[0][i]->setBias(new_bias);
         }
     }
 
-   // etotalONX_ONXnet_pd.pop_back();
-    //etotalONX_ONXnet_pd.pop_back();
- 
-    //clear_screen();
-    // final step: copy the new network over the current one.
-   // std::copy(neuronLayers.begin(), neuronLayers.end(), std::back_inserter(temp_network->neuronLayers));
     copy_in_nn(temp_network);
-    
-   
-    // lcd_cursor(0, 1);
-    // print_num((u16)data_pt.left_ir_reading);
-    // clear_screen();
-    //delete new_network;
 }
 
 std::vector<float> NeuralNetwork::getRandWeights(const size_t numWeights)
