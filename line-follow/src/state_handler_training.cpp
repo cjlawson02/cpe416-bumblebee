@@ -86,13 +86,13 @@ bool TrainingMode::btnPressed()
     // Don't allow mode switching while training
     if (m_editMode)
     {
-        // Add 15 to the epoch, and if it's over 450, reset it to 0
-        CalibrationData::EPOCHS += 15;
-        if (CalibrationData::EPOCHS > 450)
+        // Add 15 to the epoch, and if it's over 450, reset it to 150
+        CalibrationData::EPOCHS += 50;
+        if (CalibrationData::EPOCHS > 800)
         {
             lcd_cursor(0, 1);
             print_string("   ");
-            CalibrationData::EPOCHS = 15;
+            CalibrationData::EPOCHS = 150;
         }
 
         return false;
@@ -115,8 +115,8 @@ void TrainingMode::btnHeld()
     {
         clear_screen();
         print_string("Epochs");
-        // If we are starting to edit, reset the epoch to 15
-        CalibrationData::EPOCHS = 15;
+        // If we are starting to edit, reset the epoch to 150
+        CalibrationData::EPOCHS = 150;
         m_editMode = true;
     }
 }

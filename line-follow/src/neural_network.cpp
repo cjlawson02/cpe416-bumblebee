@@ -76,15 +76,16 @@ void NeuralNetwork::train(TrainingData data_pt, NeuralNetwork *temp_network, flo
     float etotal_outneuronop_pd, outneuronop_ONnet_pd, oNnet_wgt_pd;
     float etotal_hiddennueronop_pd, hiddennueronop_HNnet_pd, hNnet_wgt_pd;
     float mapped_target;
-    float speed_to_map;
     float new_weight, new_bias;
     std::vector<float> etotalONX_ONXnet_pd;
+
+    float left_mapped = Util::map(data_pt.speeds.left_speed, -100.0, 100.0, 0.0, 1.0);
+    float right_mapped = Util::map(data_pt.speeds.right_speed, -100.0, 100.0, 0.0, 1.0);
 
     // Train the output layer
     for (size_t i = 0; i < m_topology.back(); i++)
     {
-        speed_to_map = (i == 0) ? data_pt.speeds.left_speed : data_pt.speeds.right_speed;
-        mapped_target = Util::map(speed_to_map, -100.0, 100.0, 0.0, 1.0);
+        mapped_target = (i == 0) ? left_mapped : right_mapped;
         etotal_outneuronop_pd = outputs[i] - mapped_target;
         outneuronop_ONnet_pd = outputs[i] * (1 - outputs[i]);
         etotalONX_ONXnet_pd.push_back(etotal_outneuronop_pd * outneuronop_ONnet_pd);
